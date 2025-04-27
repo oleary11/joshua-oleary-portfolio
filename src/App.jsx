@@ -1,7 +1,6 @@
 import { BrowserRouter } from "react-router-dom";
 import {Hero,About,Contact,Experience,Navbar,Tech,Works,StarsCanvas} from "./components";
 
-
 function App() {
   return (
     <BrowserRouter>

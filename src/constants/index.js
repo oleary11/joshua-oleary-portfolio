@@ -8,226 +8,147 @@ import {
   html,
   css,
   reactjs,
-  tailwind,
   nodejs,
   mongodb,
   git,
   docker,
-  carrent,
-  jobit,
-  tripguide,
-  threejs,
-  carrier,
-  Fulton,
+  veritaslogo,
+  redjadelogo,
+  boulderlogo,
   EduPoint,
+  chickfilalogo,
+  merakiapi,
+  elttool,
+  nfltool
 } from "../assets";
 
-
 export const navLinks = [
-  {
-    id: "about",
-    title: "About",
-  },
-  {
-    id: "work",
-    title: "Work",
-  },
-  {
-    id: "contact",
-    title: "Contact",
-  },
+  { id: "about", title: "About" },
+  { id: "work", title: "Work" },
+  { id: "contact", title: "Contact" },
 ];
 
 const services = [
-  {
-    title: "Web Developer",
-    icon: web,
-  },
-  {
-    title: "React Native Developer",
-    icon: mobile,
-  },
-  {
-    title: "Backend Developer",
-    icon: backend,
-  },
-  {
-    title: "Machine Learning",
-    icon: creator,
-  },
+  { title: "Software Engineer", icon: web },
+  { title: "Network Engineer", icon: backend },
+  { title: "Full Stack Developer", icon: mobile },
+  { title: "Technical Support Engineer", icon: creator },
 ];
 
 const technologies = [
-  {
-    name: "HTML 5",
-    icon: html,
-  },
-  {
-    name: "CSS 3",
-    icon: css,
-  },
-  {
-    name: "JavaScript",
-    icon: javascript,
-  },
-  {
-    name: "TypeScript",
-    icon: typescript,
-  },
-  {
-    name: "React JS",
-    icon: reactjs,
-  },
-  {
-    name: "Tailwind CSS",
-    icon: tailwind,
-  },
-  {
-    name: "Node JS",
-    icon: nodejs,
-  },
-  {
-    name: "MongoDB",
-    icon: mongodb,
-  },
-  {
-    name: "Three JS",
-    icon: threejs,
-  },
-  {
-    name: "git",
-    icon: git,
-  },
-  {
-    name: "docker",
-    icon: docker,
-  },
+  { name: "C#", icon: javascript },
+  { name: "C++", icon: css },
+  { name: "Python", icon: nodejs },
+  { name: "Java", icon: nodejs },
+  { name: "JavaScript", icon: javascript },
+  { name: "HTML 5", icon: html },
+  { name: "CSS 3", icon: css },
+  { name: "TypeScript", icon: typescript },
+  { name: "Node.js", icon: nodejs },
+  { name: "React (basic)", icon: reactjs },
+  { name: "MongoDB", icon: mongodb },
+  { name: "Docker", icon: docker },
+  { name: "Git", icon: git },
 ];
 
 const experiences = [
   {
-    title: "Software Developer Intern",
-    company_name: "Edupoint Educational Systems LLC",
+    title: "Software Engineer I",
+    company_name: "Edupoint Educational Systems",
     icon: EduPoint,
     iconBg: "#383E56",
-    date: "Expected Start Date - Aug 2024",
+    date: "August 2024 - Present",
     points: [
-      "Incoming Fall Software Developer Intern at Edupoint, focusing on enhancing Synergy learning management system.",
+      "Implemented new feature development and critical bug fixes for the Synergy K-12 LMS platform using C# (.NET) and TFS, enhancing functionality for thousands of schools nationwide.",
+      "Implemented an internal tool in C# (.NET) that automated user data migration from legacy systems into our LMS, accelerating district onboarding processes and minimizing data loss risks.",
     ],
   },
   {
-    title: "Tech Consultant ",
-    company_name: "LX SPACE SUCCESS,ASU",
-    icon: Fulton,
+    title: "Network Engineer",
+    company_name: "Veritas Managed Solutions",
+    icon: veritaslogo,
     iconBg: "#E6DEDD",
-    date: "Mar 2023 - Present",
+    date: "June 2023 - June 2024",
     points: [
-      "Conducted regular maintenance, implemented software updates, and developed automation scripts in Python to ensure smooth functioning of hardware and software systems and improve efficiency. ",
-      "Diagnosed and troubleshooted complex technical issues on classroom computers running Windows and macOS operating systems and provided technical support to faculty regarding software applications. ",
+      "Implemented an automation tool leveraging the Cisco Meraki API to streamline repetitive network configuration and monitoring tasks, reducing manual intervention by over 25%.",
+      "Scoped and generated project proposals for enterprise clients, overseeing multi-site hardware/software rollouts with total valuations exceeding $100K per project.",
     ],
   },
   {
-    title: "Undergraduate Teaching Assistant",
-    company_name: "Fulton School Of Engineering,ASU",
-    icon: Fulton,
+    title: "Technical Support Engineer",
+    company_name: "University of Colorado Boulder",
+    icon: boulderlogo,
     iconBg: "#383E56",
-    date: "Jan 2023 - May 2023",
+    date: "August 2022 - May 2023",
     points: [
-      "Assisted 40 students in building several projects in SolidWorks, JavaScript, and MATLAB, providing hands-on guidance and technical support to enhance their learning experience and project outcomes. ",
-      "Developed and implemented interactive tutorials and workshops to reinforce key concepts in engineering design and programming, significantly improving student comprehension and engagement with the material. ",
+      "Provided technical support for hardware and software systems across Windows and macOS environments, troubleshooting user issues and ensuring rapid resolution.",
+      "Executed data recovery operations using backup management tools, ensuring secure restoration of critical academic and administrative information.",
     ],
   },
   {
-    title: "Software Engineering Intern",
-    company_name: "Carrier Air Conditioning India",
-    icon: carrier,
+    title: "Full Stack Engineer Intern",
+    company_name: "RedJade LLC",
+    icon: redjadelogo,
     iconBg: "#E6DEDD",
-    date: "May 2021 - May 2022",
+    date: "July 2020 - January 2021",
     points: [
-      "Designed and implemented data management systems using SQL and C++ to maintain accurate records of sales, returns,and inventory, significantly enhancing data integrity and stock management efficiency. ",
-      "Conducted thorough code reviews, executed systematic debugging, and used algorithms for the development and optimization of software systems, ensuring high-quality, efficient, and reliable software development projects.",
+      "Designed and developed production-grade web pages used by high-profile clients including NASA, Amazon, and Walmart, delivering scalable and responsive front-end and back-end solutions.",
+      "Built full-stack applications leveraging Ruby on Rails, TypeScript, and modern front-end frameworks, enhancing platform functionality and improving user experience.",
     ],
   },
+  {
+    title: "Team Leader",
+    company_name: "Chick-fil-A",
+    icon: chickfilalogo, // (you can upload a CFA logo)
+    iconBg: "#E6DEDD",
+    date: "July 2013 - August 2022",
+    points: [
+      "Led and coached team members across guest services, drive-thru, and operations, ensuring exceptional customer experiences.",
+      "Supported scheduling, staff training, and workflow optimization, improving team efficiency and service delivery.",
+    ],
+  }
+  
 ];
-
-
 
 const projects = [
   {
-    name: "Real-time Volumetric Rendering",
+    name: "Meraki API Configurer",
     description:
-      "Developed a system from scratch for real-time rendering of volumetric data using a multi-texture-based rendering technique.The transfer function can be adjusted in real-time through a graphical interface.",
+      "A full-stack web application to automate network device configuration management. Built backend services to pull device data via the Meraki API, store configurations in a MySQL database, compare against standardized templates, and push real-time updates to align devices with compliance standards.",
     tags: [
-      {
-        name: "C++",
-        color: "blue-text-gradient",
-      },
-      {
-        name: "CMake",
-        color: "green-text-gradient",
-      },
-      {
-        name: "OpenGL",
-        color: "pink-text-gradient",
-      },
-      {
-        name: "Shader Programming",
-        color: "orange-text-gradient",
-      },
-      
+      { name: "Python", color: "blue-text-gradient" },
+      { name: "Flask", color: "green-text-gradient" },
+      { name: "SQL", color: "pink-text-gradient" },
+      { name: "Cisco Meraki API", color: "orange-text-gradient" },
     ],
-    image: carrent,
-    source_code_link: "https://github.com/",
+    image: merakiapi,
+    source_code_link: "https://github.com/oleary11/MerakiConfigurer",
   },
   {
-    name: "Chess Arena",
+    name: "ELT Tool",
     description:
-      "Developed a full-stack web-based chess application leveraging JavaScript for frontend interactivity and C++ for backend game logic and deployed it via Vercel.",
+      "A full-stack web application to implement an Extract, Load, Transfer (ELT) data workflow between BigQuery and Google Sheets. Designed a custom HTML/JavaScript frontend connected to a fully custom built API, enabling seamless data extraction, transformation, and synchronization across sources.",
     tags: [
-      {
-        name: "C++",
-        color: "blue-text-gradient",
-      },
-      {
-        name: "JavaScript",
-        color: "green-text-gradient",
-      },
-      {
-        name: "CSS",
-        color: "pink-text-gradient",
-      },
-      {
-        name: "HTML",
-        color: "orange-text-gradient",
-      },
+      { name: "NodeJS", color: "blue-text-gradient" },
+      { name: "HTML", color: "green-text-gradient" },
+      { name: "JavaScript", color: "pink-text-gradient" },
+      { name: "Google Sheets API", color: "orange-text-gradient" },
     ],
-    image: jobit,
-    source_code_link: "https://github.com/",
+    image: elttool,
+    source_code_link: "https://github.com/oleary11/data-mover",
   },
   {
-    name: "ResQ(Smart India Hackathon)",
+    name: "NFL Sentiment Analysis Tool",
     description:
-      "Developed a disaster management app for efficient collaboration among rescue agencies, utilizing Python and Node.js for backend, Flutter for frontend, and Google Maps API for real-time location tracking.",
+      "A data mining and sentiment analysis tool using Python to gather and process NFL-related tweets via the Twitter API. Analyzed tweet sentiment and ‘toxicity scores’ using natural language processing libraries which were used to accurately predict weekly game outcomes based on fan sentiment trends.",
     tags: [
-      {
-        name: "Python",
-        color: "blue-text-gradient",
-      },
-      {
-        name: "NodeJS",
-        color: "green-text-gradient",
-      },
-      {
-        name: "Flutter",
-        color: "pink-text-gradient",
-      },
-      {
-        name: "Google Maps API",
-        color: "orange-text-gradient",
-      },
+      { name: "Python", color: "blue-text-gradient" },
+      { name: "Twitter API", color: "green-text-gradient" },
+      { name: "Pandas", color: "pink-text-gradient" },
+      { name: "NLTK", color: "orange-text-gradient" },
     ],
-    image: tripguide,
-    source_code_link: "https://github.com/",
+    image: nfltool,
+    source_code_link: "https://github.com/oleary11/NFLSentimentAnalysis",
   },
 ];
 

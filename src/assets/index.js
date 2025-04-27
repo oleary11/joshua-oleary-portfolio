@@ -20,18 +20,22 @@ import typescript from "./tech/typescript.png";
 import threejs from "./tech/threejs.svg";
 
 
-import carrier from "./company/carrier.png";
+import boulderlogo from "./company/boulderlogo.jpg";
 import EduPoint from "./company/EduPoint.png";
-import Fulton from "./company/Fulton.png";
+import veritaslogo from "./company/veritaslogo.jpg";
+import redjadelogo from "./company/redjadelogo.jpg";
+import chickfilalogo from "./company/chickfilaLogo.png";
 
-import carrent from "./carrent.png";
-import jobit from "./jobit.png";
-import tripguide from "./tripguide.png";
+import merakiapi from "./meraki1.png";
+import elttool from "./elttool.png";
+import nfltool from "./nfltool.png";
 
 export {
-  carrier,
+  boulderlogo,
   EduPoint,
-  Fulton,
+  veritaslogo,
+  redjadelogo,
+  chickfilalogo,
   logo,
   backend,
   creator,
@@ -51,7 +55,7 @@ export {
   tailwind,
   typescript,
   threejs,
-  carrent,
-  jobit,
-  tripguide,
+  merakiapi,
+  elttool,
+  nfltool
 };
