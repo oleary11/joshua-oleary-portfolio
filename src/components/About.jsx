@@ -1,7 +1,4 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/no-unknown-property */
-
-import Tilt from "react-tilt";
+import Tilt from "react-parallax-tilt";
 import { motion } from "framer-motion";
 
 import { styles } from "../styles";
@@ -11,31 +8,37 @@ import { fadeIn, textVariant } from "../utils/motion";
 
 const ServiceCard = ({ index, title, icon }) => {
   return (
-    <Tilt className="xs:w-[250px] w-full">
-      <motion.div
-        variants={fadeIn("right", "spring", index * 0.5, 0.75)}
+    <motion.div
+      variants={fadeIn("up", "spring", index * 0.3, 0.75)}
+      initial={{ y: 50, opacity: 0 }}
+      animate={{ y: [50, -10, 0], opacity: 1 }}
+      transition={{
+        duration: 1,
+        delay: index * 0.2,
+        type: "spring",
+        stiffness: 120,
+      }}
+      className="xs:w-[250px] w-full"
+    >
+      <Tilt
+        tiltMaxAngleX={20}
+        tiltMaxAngleY={20}
+        scale={1.05}
+        transitionSpeed={1500}
         className="w-full green-pink-gradient p-[1px] rounded-[20px] shadow-card"
       >
-        <div
-          options={{
-            max: 45,
-            scale: 1,
-            speed: 450,
-          }}
-          className="bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col"
-        >
+        <div className="bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col animate-float">
           <img
             src={icon}
-            alt="web-development"
+            alt="service-icon"
             className="w-16 h-16 object-contain"
           />
-
           <h3 className="text-white text-[20px] font-bold text-center">
             {title}
           </h3>
         </div>
-      </motion.div>
-    </Tilt>
+      </Tilt>
+    </motion.div>
   );
 };
 
