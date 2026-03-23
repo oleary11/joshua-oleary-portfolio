@@ -1,4 +1,5 @@
 import logo from "./logo.svg";
+import resume from "./Joshua Technical Resume.pdf";
 import backend from "./backend.png";
 import creator from "./creator.png";
 import mobile from "./mobile.png";
@@ -29,8 +30,11 @@ import chickfilalogo from "./company/chickfilaLogo.png";
 import merakiapi from "./meraki1.png";
 import elttool from "./elttool.png";
 import nfltool from "./nfltool.png";
+import desertcandleworks from "./desertcandleworks.png";
 
 export {
+  resume,
+  desertcandleworks,
   boulderlogo,
   EduPoint,
   veritaslogo,

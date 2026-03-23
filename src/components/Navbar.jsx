@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { FaGithub } from "react-icons/fa";
 
 import { styles } from "../styles";
 import { navLinks } from "../constants";
@@ -51,7 +52,7 @@ const Navbar = () => {
           </p>
         </Link>
 
-        <ul className="list-none hidden sm:flex flex-row gap-10">
+        <ul className="list-none hidden sm:flex flex-row gap-10 items-center">
           {navLinks.map((nav) => (
             <li
               key={nav.id}
@@ -61,11 +62,20 @@ const Navbar = () => {
               onClick={() => setActive(nav.title)}
             >
               <a href={`#${nav.id}`}>{nav.title}</a>
-
-              {/* Underline effect */}
               <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-white transition-all group-hover:w-full"></span>
             </li>
           ))}
+          <li>
+            <a
+              href="https://github.com/oleary11"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-secondary hover:text-white transition-colors duration-300 flex items-center"
+              aria-label="GitHub"
+            >
+              <FaGithub size={22} />
+            </a>
+          </li>
         </ul>
 
         {/* Mobile Menu */}

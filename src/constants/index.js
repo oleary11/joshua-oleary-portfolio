@@ -19,12 +19,25 @@ import {
   chickfilalogo,
   merakiapi,
   elttool,
-  nfltool
+  nfltool,
+  desertcandleworks,
 } from "../assets";
+
+import cSharp from "../assets/tech/cSharp.png";
+import cpp from "../assets/tech/cpp.png";
+import python from "../assets/tech/python.png";
+import java from "../assets/tech/java.png";
+import cLogo from "../assets/tech/c.png";
+import ruby from "../assets/tech/ruby.png";
+import sql from "../assets/tech/sql.png";
+import linux from "../assets/tech/linux.png";
+import bootstrap from "../assets/tech/bootstrap.png";
+import githubIcon from "../assets/tech/github.png";
 
 export const navLinks = [
   { id: "about", title: "About" },
   { id: "work", title: "Work" },
+  { id: "education", title: "Education" },
   { id: "contact", title: "Contact" },
 ];
 
@@ -36,19 +49,25 @@ const services = [
 ];
 
 const technologies = [
-  { name: "C#", icon: javascript },
-  { name: "C++", icon: css },
-  { name: "Python", icon: nodejs },
-  { name: "Java", icon: nodejs },
+  { name: "C", icon: cLogo },
+  { name: "C#", icon: cSharp },
+  { name: "C++", icon: cpp },
+  { name: "Python", icon: python },
+  { name: "Java", icon: java },
+  { name: "Ruby", icon: ruby },
   { name: "JavaScript", icon: javascript },
+  { name: "TypeScript", icon: typescript },
   { name: "HTML 5", icon: html },
   { name: "CSS 3", icon: css },
-  { name: "TypeScript", icon: typescript },
+  { name: "SQL", icon: sql },
   { name: "Node.js", icon: nodejs },
-  { name: "React (basic)", icon: reactjs },
+  { name: "React", icon: reactjs },
   { name: "MongoDB", icon: mongodb },
+  { name: "Bootstrap", icon: bootstrap },
   { name: "Docker", icon: docker },
   { name: "Git", icon: git },
+  { name: "GitHub", icon: githubIcon },
+  { name: "Linux", icon: linux },
 ];
 
 const experiences = [
@@ -150,6 +169,48 @@ const projects = [
     image: nfltool,
     source_code_link: "https://github.com/oleary11/NFLSentimentAnalysis",
   },
+  {
+    name: "Desert Candle Works",
+    description:
+      "A full-stack e-commerce platform for a local candle business. Built a custom product catalog, shopping cart, and checkout flow with Square and Stripe payment processing. Features a PostgreSQL database via Drizzle ORM, Vercel Blob image storage, transactional email with Resend, and a custom admin dashboard for order and inventory management.",
+    tags: [
+      { name: "Next.js", color: "blue-text-gradient" },
+      { name: "TypeScript", color: "green-text-gradient" },
+      { name: "PostgreSQL", color: "pink-text-gradient" },
+      { name: "Stripe", color: "orange-text-gradient" },
+    ],
+    image: desertcandleworks,
+    source_code_link: null,
+    live_link: "https://desertcandleworks.com",
+  },
 ];
 
-export { services, technologies, experiences, projects };
+const education = {
+  school: "University of Colorado at Boulder",
+  location: "Boulder, CO",
+  degree: "Bachelor of Arts in Computer Science",
+  date: "May 2023",
+  courses: [
+    "Data Structures & Algorithms",
+    "Operating Systems",
+    "Object-Oriented Programming",
+    "Data Mining",
+    "Database Systems",
+    "Robotics",
+    "Big Data Architecture",
+  ],
+  certifications: [
+    { title: "CCNA Training", org: "CBT Nuggets" },
+    { title: "Aviatrix Certified Engineer", org: "Multi-Cloud Network Associate" },
+  ],
+  awards: [
+    { title: "Outstanding Senior Award", org: "CU Interfraternity Council" },
+    { title: "Brother of the Year Award", org: "Sigma Tau Gamma Fraternity" },
+  ],
+  leadership: [
+    { title: "President", org: "Sigma Tau Gamma Fraternity" },
+    { title: "Director of Community Engagement", org: "Sigma Tau Gamma Fraternity" },
+  ],
+};
+
+export { services, technologies, experiences, projects, education };

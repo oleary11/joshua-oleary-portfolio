@@ -6,6 +6,11 @@ import Tech from './Tech';
 import Experience from './Experience';
 import Works from './Works';
 import Contact from './Contact';
+import Education from './Education';
+import ScrollProgressBar from './ScrollProgressBar';
+import BackToTop from './BackToTop';
+import CustomCursor from './CustomCursor';
+import Loader from './Loader';
 
 export {
   Hero,
@@ -15,6 +20,11 @@ export {
   Experience,
   Works,
   Contact,
-  EarthCanvas,  
-  StarsCanvas
+  Education,
+  ScrollProgressBar,
+  BackToTop,
+  CustomCursor,
+  Loader,
+  EarthCanvas,
+  StarsCanvas,
 }

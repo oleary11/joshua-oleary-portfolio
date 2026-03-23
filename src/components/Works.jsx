@@ -1,11 +1,15 @@
 import Tilt from "react-parallax-tilt";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 
 import { styles } from "../styles";
 import { github } from "../assets";
 import { SectionWrapper } from "../hoc";
 import { projects } from "../constants";
 import { fadeIn, textVariant } from "../utils/motion";
+
+const allTags = ["All", ...new Set(projects.flatMap((p) => p.tags.map((t) => t.name)))];
 
 const ProjectCard = ({
   index,
@@ -14,6 +18,7 @@ const ProjectCard = ({
   tags,
   image,
   source_code_link,
+  live_link,
 }) => {
   return (
     <motion.div
@@ -41,21 +46,26 @@ const ProjectCard = ({
             className="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500"
           />
 
-          <motion.div
-            whileTap={{ scale: 0.9 }}
-            className="absolute inset-0 flex justify-end m-3 card-img_hover"
-          >
-            <div
-              onClick={() => window.open(source_code_link, "_blank")}
-              className="black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer ripple-effect hover:scale-110 transition-all duration-300"
-            >
-              <img
-                src={github}
-                alt="source code"
-                className="w-1/2 h-1/2 object-contain"
-              />
-            </div>
-          </motion.div>
+          <div className="absolute inset-0 flex justify-end gap-2 m-3 card-img_hover">
+            {source_code_link && (
+              <div
+                onClick={() => window.open(source_code_link, "_blank")}
+                className="black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer hover:scale-110 transition-all duration-300"
+                title="View source code"
+              >
+                <FaGithub className="text-white w-5 h-5" />
+              </div>
+            )}
+            {live_link && (
+              <div
+                onClick={() => window.open(live_link, "_blank")}
+                className="black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer hover:scale-110 transition-all duration-300"
+                title="View live site"
+              >
+                <FaExternalLinkAlt className="text-white w-4 h-4" />
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="mt-5">
@@ -76,6 +86,12 @@ const ProjectCard = ({
 };
 
 const Works = () => {
+  const [activeFilter, setActiveFilter] = useState("All");
+
+  const filtered = activeFilter === "All"
+    ? projects
+    : projects.filter((p) => p.tags.some((t) => t.name === activeFilter));
+
   return (
     <>
       <motion.div variants={textVariant()}>
@@ -88,14 +104,42 @@ const Works = () => {
           variants={fadeIn("", "", 0.1, 1)}
           className="mt-3 text-secondary text-[17px] max-w-3xl leading-[30px]"
         >
-          Following projects showcase my skills and experience through real-world examples of my work. Each project is briefly described with links to code repositories and live demos. It reflects my ability to solve complex problems, work with different technologies, and manage projects effectively.
+          Following projects showcase my skills and experience through real-world examples of my work. Each project is briefly described with links to code repositories. It reflects my ability to solve complex problems, work with different technologies, and manage projects effectively.
         </motion.p>
       </div>
 
-      <div className="mt-20 flex flex-wrap gap-7">
-        {projects.map((project, index) => (
-          <ProjectCard key={`project-${index}`} index={index} {...project} />
+      {/* Filter buttons */}
+      <div className="mt-10 flex flex-wrap gap-3">
+        {allTags.map((tag) => (
+          <button
+            key={tag}
+            onClick={() => setActiveFilter(tag)}
+            className={`px-4 py-2 rounded-full text-[14px] font-medium transition-all duration-200 ${
+              activeFilter === tag
+                ? "bg-[#915EFF] text-white"
+                : "bg-[#1d1836] text-secondary hover:text-white border border-white/10"
+            }`}
+          >
+            {tag}
+          </button>
         ))}
+      </div>
+
+      <div className="mt-10 flex flex-wrap gap-7">
+        <AnimatePresence mode="popLayout">
+          {filtered.map((project, index) => (
+            <motion.div
+              key={project.name}
+              layout
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.25 }}
+            >
+              <ProjectCard index={index} {...project} />
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
     </>
   );
