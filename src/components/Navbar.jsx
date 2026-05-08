@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FaGithub } from "react-icons/fa";
 
 import { styles } from "../styles";
@@ -10,6 +10,8 @@ const Navbar = () => {
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+  const isHome = location.pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -61,10 +63,18 @@ const Navbar = () => {
               } hover:text-white group transition-colors duration-300`}
               onClick={() => setActive(nav.title)}
             >
-              <a href={`#${nav.id}`}>{nav.title}</a>
+              <a href={isHome ? `#${nav.id}` : `/#${nav.id}`}>{nav.title}</a>
               <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-white transition-all group-hover:w-full"></span>
             </li>
           ))}
+          <li
+            className={`relative text-[18px] font-medium cursor-pointer ${
+              location.pathname.startsWith("/blog") ? "text-white" : "text-secondary"
+            } hover:text-white group transition-colors duration-300`}
+          >
+            <Link to="/blog">Blog</Link>
+            <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-white transition-all group-hover:w-full"></span>
+          </li>
           <li>
             <a
               href="https://github.com/oleary11"
@@ -103,9 +113,17 @@ const Navbar = () => {
                     setActive(nav.title);
                   }}
                 >
-                  <a href={`#${nav.id}`}>{nav.title}</a>
+                  <a href={isHome ? `#${nav.id}` : `/#${nav.id}`}>{nav.title}</a>
                 </li>
               ))}
+              <li
+                className={`font-roboto font-medium cursor-pointer text-[16px] ${
+                  location.pathname.startsWith("/blog") ? "text-white" : "text-secondary"
+                } hover:text-white`}
+                onClick={() => setToggle(!toggle)}
+              >
+                <Link to="/blog">Blog</Link>
+              </li>
             </ul>
           </div>
         </div>

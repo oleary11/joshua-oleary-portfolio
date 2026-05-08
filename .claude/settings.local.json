@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git clone *)",
+      "Bash(git init *)",
+      "Bash(git remote *)",
+      "Bash(git fetch *)",
+      "Bash(git checkout *)",
+      "Bash(Get-ChildItem -Path \"d:\\\\Personal Projects\\\\Portfolio\" -Recurse -Force)",
+      "Bash(Select-Object FullName)",
+      "Bash(Format-Table -AutoSize)",
+      "Bash(Out-String)",
+      "Bash(npm install *)",
+      "Bash(npm run *)"
+    ]
+  }
+}

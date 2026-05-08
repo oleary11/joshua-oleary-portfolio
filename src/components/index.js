@@ -7,6 +7,7 @@ import Experience from './Experience';
 import Works from './Works';
 import Contact from './Contact';
 import Education from './Education';
+import RecentBlogs from './RecentBlogs';
 import ScrollProgressBar from './ScrollProgressBar';
 import BackToTop from './BackToTop';
 import CustomCursor from './CustomCursor';
@@ -21,6 +22,7 @@ export {
   Works,
   Contact,
   Education,
+  RecentBlogs,
   ScrollProgressBar,
   BackToTop,
   CustomCursor,
