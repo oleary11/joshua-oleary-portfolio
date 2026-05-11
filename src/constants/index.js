@@ -21,6 +21,7 @@ import {
   elttool,
   nfltool,
   desertcandleworks,
+  platrly,
 } from "../assets";
 
 import cSharp from "../assets/tech/cSharp.png";
@@ -182,6 +183,20 @@ const projects = [
     image: desertcandleworks,
     source_code_link: null,
     live_link: "https://desertcandleworks.com",
+  },
+  {
+    name: "Platrly",
+    description:
+      "A cross-platform mobile app for restaurants and multi-location businesses to manage daily operations via customizable checklists. Features PIN-based team authentication, photo capture on task completion, real-time admin dashboards with live progress tracking, offline-first sync, and subscription management — built to run as a kiosk on tablets.",
+    tags: [
+      { name: "React Native", color: "blue-text-gradient" },
+      { name: "TypeScript", color: "green-text-gradient" },
+      { name: "Supabase", color: "pink-text-gradient" },
+      { name: "Expo", color: "orange-text-gradient" },
+    ],
+    image: platrly,
+    source_code_link: null,
+    live_link: "https://www.platrly.com/",
   },
 ];
 

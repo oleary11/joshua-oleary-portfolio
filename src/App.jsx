@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import { BackToTop, CustomCursor, ScrollProgressBar } from './components';
+import { BackToTop, ScrollProgressBar } from './components';
 import ScrollToTop from './components/ScrollToTop';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -15,8 +15,7 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <CustomCursor />
-      <ScrollProgressBar />
+<ScrollProgressBar />
       <BackToTop />
       <Routes>
         {/* Public */}

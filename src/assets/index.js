@@ -31,6 +31,7 @@ import merakiapi from "./meraki1.png";
 import elttool from "./elttool.png";
 import nfltool from "./nfltool.png";
 import desertcandleworks from "./desertcandleworks.png";
+import platrly from "./platrly.png";
 
 export {
   resume,
@@ -61,5 +62,6 @@ export {
   threejs,
   merakiapi,
   elttool,
-  nfltool
+  nfltool,
+  platrly,
 };
