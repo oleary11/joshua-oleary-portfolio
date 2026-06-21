@@ -23,10 +23,10 @@ const PortfolioHome = () => {
           <Hero />
         </div>
         <About />
+        <Works />
         <Experience />
         <Education />
         <Tech />
-        <Works />
         <RecentBlogs />
         <div className="relative z-0">
           <Contact />
