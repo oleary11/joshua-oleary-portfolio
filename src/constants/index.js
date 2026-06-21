@@ -132,6 +132,34 @@ const experiences = [
 
 const projects = [
   {
+    name: "Platrly",
+    description:
+      "A cross-platform mobile app for restaurants and multi-location businesses to manage daily operations via customizable checklists. Features PIN-based team authentication, photo capture on task completion, real-time admin dashboards with live progress tracking, offline-first sync, and subscription management — built to run as a kiosk on tablets.",
+    tags: [
+      { name: "React Native", color: "blue-text-gradient" },
+      { name: "TypeScript", color: "green-text-gradient" },
+      { name: "Supabase", color: "pink-text-gradient" },
+      { name: "Expo", color: "orange-text-gradient" },
+    ],
+    image: platrly,
+    source_code_link: null,
+    live_link: "https://www.platrly.com/",
+  },
+  {
+    name: "Desert Candle Works",
+    description:
+      "A full-stack e-commerce platform for a local candle business. Built a custom product catalog, shopping cart, and checkout flow with Square and Stripe payment processing. Features a PostgreSQL database via Drizzle ORM, Vercel Blob image storage, transactional email with Resend, and a custom admin dashboard for order and inventory management.",
+    tags: [
+      { name: "Next.js", color: "blue-text-gradient" },
+      { name: "TypeScript", color: "green-text-gradient" },
+      { name: "PostgreSQL", color: "pink-text-gradient" },
+      { name: "Stripe", color: "orange-text-gradient" },
+    ],
+    image: desertcandleworks,
+    source_code_link: null,
+    live_link: "https://desertcandleworks.com",
+  },
+  {
     name: "Meraki API Configurer",
     description:
       "A full-stack web application to automate network device configuration management. Built backend services to pull device data via the Meraki API, store configurations in a MySQL database, compare against standardized templates, and push real-time updates to align devices with compliance standards.",
@@ -169,34 +197,6 @@ const projects = [
     ],
     image: nfltool,
     source_code_link: "https://github.com/oleary11/NFLSentimentAnalysis",
-  },
-  {
-    name: "Desert Candle Works",
-    description:
-      "A full-stack e-commerce platform for a local candle business. Built a custom product catalog, shopping cart, and checkout flow with Square and Stripe payment processing. Features a PostgreSQL database via Drizzle ORM, Vercel Blob image storage, transactional email with Resend, and a custom admin dashboard for order and inventory management.",
-    tags: [
-      { name: "Next.js", color: "blue-text-gradient" },
-      { name: "TypeScript", color: "green-text-gradient" },
-      { name: "PostgreSQL", color: "pink-text-gradient" },
-      { name: "Stripe", color: "orange-text-gradient" },
-    ],
-    image: desertcandleworks,
-    source_code_link: null,
-    live_link: "https://desertcandleworks.com",
-  },
-  {
-    name: "Platrly",
-    description:
-      "A cross-platform mobile app for restaurants and multi-location businesses to manage daily operations via customizable checklists. Features PIN-based team authentication, photo capture on task completion, real-time admin dashboards with live progress tracking, offline-first sync, and subscription management — built to run as a kiosk on tablets.",
-    tags: [
-      { name: "React Native", color: "blue-text-gradient" },
-      { name: "TypeScript", color: "green-text-gradient" },
-      { name: "Supabase", color: "pink-text-gradient" },
-      { name: "Expo", color: "orange-text-gradient" },
-    ],
-    image: platrly,
-    source_code_link: null,
-    live_link: "https://www.platrly.com/",
   },
 ];
 
