@@ -22,6 +22,7 @@ import {
   nfltool,
   desertcandleworks,
   platrly,
+  idahostumpgrinders,
 } from "../assets";
 
 import cSharp from "../assets/tech/cSharp.png";
@@ -158,6 +159,19 @@ const projects = [
     image: desertcandleworks,
     source_code_link: null,
     live_link: "https://desertcandleworks.com",
+  },
+  {
+    name: "Idaho Stump Grinders",
+    description:
+      "A professional business website for a family-owned stump grinding and removal company serving Southwest and Central Idaho. Features a services showcase, before/after photo gallery, customer testimonials, and lead generation with free quote requests — built for local SEO and mobile usability.",
+    tags: [
+      { name: "Next.js", color: "blue-text-gradient" },
+      { name: "TypeScript", color: "green-text-gradient" },
+      { name: "Tailwind CSS", color: "pink-text-gradient" },
+    ],
+    image: idahostumpgrinders,
+    source_code_link: null,
+    live_link: "https://www.idahostumpgrinders.com/",
   },
   {
     name: "Meraki API Configurer",
