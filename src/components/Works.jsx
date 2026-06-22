@@ -40,11 +40,17 @@ const ProjectCard = ({
         className="bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full hover:shadow-2xl transition-transform duration-500"
       >
         <div className="relative w-full h-[230px] overflow-hidden rounded-2xl group">
-          <img
-            src={image}
-            alt="project_image"
-            className="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500"
-          />
+          {image ? (
+            <img
+              src={image}
+              alt="project_image"
+              className="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500"
+            />
+          ) : (
+            <div className="w-full h-full bg-[#1d1836] rounded-2xl flex items-center justify-center">
+              <span className="text-secondary text-sm">No preview</span>
+            </div>
+          )}
 
           <div className="absolute inset-0 flex justify-end gap-2 m-3 card-img_hover">
             {source_code_link && (
