@@ -22,6 +22,7 @@ import {
   nfltool,
   desertcandleworks,
   platrly,
+  idahostumpgrinders,
 } from "../assets";
 
 import cSharp from "../assets/tech/cSharp.png";
@@ -168,7 +169,7 @@ const projects = [
       { name: "TypeScript", color: "green-text-gradient" },
       { name: "Tailwind CSS", color: "pink-text-gradient" },
     ],
-    image: null,
+    image: idahostumpgrinders,
     source_code_link: null,
     live_link: "https://www.idahostumpgrinders.com/",
   },

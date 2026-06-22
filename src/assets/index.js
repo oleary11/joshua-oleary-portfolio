@@ -32,9 +32,11 @@ import elttool from "./elttool.png";
 import nfltool from "./nfltool.png";
 import desertcandleworks from "./desertcandleworks.png";
 import platrly from "./platrly.png";
+import idahostumpgrinders from "./idahostumpgrinders.png";
 
 export {
   resume,
+  idahostumpgrinders,
   desertcandleworks,
   boulderlogo,
   EduPoint,
