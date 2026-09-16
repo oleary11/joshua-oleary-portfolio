@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { styles } from "../styles";
-import FishingScene from "./FishingScene";
+import { EarthCanvas } from "./canvas";
 import { SectionWrapper } from "../hoc";
 import { slideIn } from "../utils/motion";
 import { celebrate } from "../utils/confetti";
@@ -157,8 +157,15 @@ const Contact = () => {
       <motion.div
         variants={slideIn("right", "tween", 0.2, 1)}
         className="xl:flex-1 xl:h-[650px] md:h-[500px] h-[400px]"
+        animate={{ y: [0, -10, 0] }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          repeatType: "loop",
+          ease: "easeInOut",
+        }}
       >
-        <FishingScene />
+        <EarthCanvas />
       </motion.div>
     </div>
   );
