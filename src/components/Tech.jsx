@@ -1,5 +1,5 @@
 import { animate, motion, useMotionValue } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { techImages } from "../assets/tech";
 import useMeasure from "react-use-measure";
 
@@ -8,10 +8,22 @@ const Tech = () => {
   const xTranslation = useMotionValue(0);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [draggingCount, setDraggingCount] = useState(0);
+  const controlsRef = useRef(null);
 
   useEffect(() => {
-    const finalPosition = -width / 2 - 8;
-    const controls = animate(xTranslation, [0, finalPosition], {
+    // Freeze the belt the instant a card is grabbed (draggingCount > 0) so a
+    // held icon disengages immediately instead of still sliding with the
+    // conveyor underneath the pointer. Resuming rebases the loop to wherever
+    // it was frozen (not back to 0) — seamless either way since the content
+    // is duplicated, so any starting offset loops cleanly.
+    if (draggingCount > 0 || !width) {
+      controlsRef.current?.stop();
+      return;
+    }
+
+    const from = xTranslation.get();
+    const distance = width / 2 + 8;
+    controlsRef.current = animate(xTranslation, [from, from - distance], {
       repeat: Infinity,
       duration: 35,
       ease: "linear",
@@ -19,8 +31,8 @@ const Tech = () => {
       repeatDelay: 0,
     });
 
-    return controls.stop;
-  }, [xTranslation, width]);
+    return () => controlsRef.current?.stop();
+  }, [xTranslation, width, draggingCount]);
 
   const handleDragStateChange = (dragging) => {
     setDraggingCount((c) => Math.max(0, c + (dragging ? 1 : -1)));
@@ -64,10 +76,18 @@ const Card = ({ image, idx, hoveredIndex, setHoveredIndex, onDragStateChange }) 
   else if (offset === 1) lift = -10;
   else if (offset === 2) lift = -5;
 
-  const handleDragStart = () => {
-    setIsDragging(true);
-    onDragStateChange(true);
-  };
+  // framer-motion's own onDragStart only fires after the pointer crosses a
+  // small movement threshold — freezing the belt on that event still lets it
+  // slide for the first few pixels of a hold. Freeze immediately on the raw
+  // pointer press instead, and resume on release regardless of whether an
+  // actual drag ever happened (a plain click never reaches onDragStart at
+  // all, so it needs its own resume path). onDragStateChange's counter is
+  // clamped at 0, so a release firing both onPointerUp and onDragEnd for the
+  // same gesture is harmless.
+  const handlePointerDown = () => onDragStateChange(true);
+  const handlePointerUp = () => onDragStateChange(false);
+
+  const handleDragStart = () => setIsDragging(true);
 
   const handleDragEnd = (event, info) => {
     setIsDragging(false);
@@ -83,6 +103,9 @@ const Card = ({ image, idx, hoveredIndex, setHoveredIndex, onDragStateChange }) 
       drag
       dragMomentum={false}
       whileDrag={{ scale: 1.15, zIndex: 50 }}
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerUp}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
       animate={!isDragging ? { y: lift } : undefined}

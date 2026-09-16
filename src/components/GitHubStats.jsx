@@ -1,12 +1,43 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useInView, useMotionValue, useTransform, animate } from "framer-motion";
 import { styles } from "../styles";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant, easeOut } from "../utils/motion";
 
 const GITHUB_USERNAME = "oleary11";
-const CACHE_KEY = "gh-stats";
+const PUBLIC_CACHE_KEY = "gh-stats";
+const PRIVATE_CACHE_KEY = "gh-stats-private";
 const CACHE_TTL_MS = 60 * 60 * 1000;
+
+function useCachedFetch(inView, cacheKey, fetcher) {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    if (!inView) return;
+
+    const cached = sessionStorage.getItem(cacheKey);
+    if (cached) {
+      try {
+        const { data: cachedData, ts } = JSON.parse(cached);
+        if (Date.now() - ts < CACHE_TTL_MS) {
+          setData(cachedData);
+          return;
+        }
+      } catch {
+        // ignore malformed cache, fall through to a fresh fetch
+      }
+    }
+
+    fetcher()
+      .then((freshData) => {
+        sessionStorage.setItem(cacheKey, JSON.stringify({ data: freshData, ts: Date.now() }));
+        setData(freshData);
+      })
+      .catch(() => setData(null));
+  }, [inView, cacheKey, fetcher]);
+
+  return data;
+}
 
 const Stat = ({ target, label, inView }) => {
   const count = useMotionValue(0);
@@ -51,48 +82,41 @@ const StatsImage = ({ src, alt }) => {
 };
 
 const GitHubStats = () => {
-  const [stats, setStats] = useState(null);
-  const [status, setStatus] = useState("idle");
   // Always-mounted, real-size wrapper — the fetch trigger below. A
   // conditionally-swapped zero-height placeholder here would make
   // useInView's area-based threshold (amount: 0.4) never satisfy.
   const statsRef = useRef(null);
   const inView = useInView(statsRef, { once: true, amount: 0.4 });
 
-  useEffect(() => {
-    if (!inView) return;
-
-    const cached = sessionStorage.getItem(CACHE_KEY);
-    if (cached) {
-      try {
-        const { data, ts } = JSON.parse(cached);
-        if (Date.now() - ts < CACHE_TTL_MS) {
-          setStats(data);
-          setStatus("success");
-          return;
-        }
-      } catch {
-        // ignore malformed cache, fall through to a fresh fetch
-      }
-    }
-
-    setStatus("loading");
-    fetch(`https://api.github.com/users/${GITHUB_USERNAME}`)
-      .then((r) => {
+  const fetchPublicStats = useCallback(
+    () =>
+      fetch(`https://api.github.com/users/${GITHUB_USERNAME}`).then((r) => {
         if (!r.ok) throw new Error(String(r.status));
         return r.json();
-      })
-      .then((data) => {
-        sessionStorage.setItem(CACHE_KEY, JSON.stringify({ data, ts: Date.now() }));
-        setStats(data);
-        setStatus("success");
-      })
-      .catch(() => setStatus("error"));
-  }, [inView]);
+      }),
+    []
+  );
+  const publicStats = useCachedFetch(inView, PUBLIC_CACHE_KEY, fetchPublicStats);
+
+  // Private repo count and true lifetime commit totals aren't visible to
+  // anyone via the public REST API, even the account owner — this hits a
+  // server-side function (api/github-stats.js) holding a GitHub token that
+  // never reaches the browser. Independent of the public fetch above: if
+  // this comes back null (token not configured yet, GitHub error, etc.),
+  // those two stats just show the Stat component's "—" placeholder.
+  const fetchPrivateStats = useCallback(
+    () =>
+      fetch("/api/github-stats").then((r) => {
+        if (!r.ok) throw new Error(String(r.status));
+        return r.json();
+      }),
+    []
+  );
+  const privateStats = useCachedFetch(inView, PRIVATE_CACHE_KEY, fetchPrivateStats);
 
   const yearsOnGithub =
-    stats?.created_at != null
-      ? Math.floor((Date.now() - new Date(stats.created_at)) / (365.25 * 24 * 60 * 60 * 1000))
+    publicStats?.created_at != null
+      ? Math.floor((Date.now() - new Date(publicStats.created_at)) / (365.25 * 24 * 60 * 60 * 1000))
       : null;
 
   return (
@@ -107,13 +131,9 @@ const GitHubStats = () => {
         variants={fadeIn("up", "spring", 0.1, 0.75)}
         className="mt-12 grid grid-cols-3 gap-4 sm:gap-8 max-w-2xl min-h-[88px]"
       >
-        {status === "success" && (
-          <>
-            <Stat target={stats.public_repos} label="Public Repos" inView={inView} />
-            <Stat target={stats.followers} label="Followers" inView={inView} />
-            <Stat target={yearsOnGithub} label="Years on GitHub" inView={inView} />
-          </>
-        )}
+        <Stat target={privateStats?.privateRepos ?? null} label="Private Repos" inView={inView} />
+        <Stat target={privateStats?.totalCommits ?? null} label="Total Commits" inView={inView} />
+        <Stat target={yearsOnGithub} label="Years on GitHub" inView={inView} />
       </motion.div>
 
       <motion.div
