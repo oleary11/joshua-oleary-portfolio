@@ -65,7 +65,7 @@ const CustomCursor = () => {
   return (
     <motion.div
       aria-hidden="true"
-      className="pointer-events-none fixed top-0 left-0 z-[9999] hidden md:flex items-center justify-center rounded-full border border-white mix-blend-difference"
+      className="pointer-events-none fixed top-0 left-0 z-[10001] hidden md:flex items-center justify-center rounded-full border border-white mix-blend-difference"
       style={{ x: springX, y: springY, translateX: "-50%", translateY: "-50%", opacity: overTextInput ? 0 : 1 }}
       animate={{ width: size, height: size }}
       transition={{ type: "spring", stiffness: 320, damping: 26 }}

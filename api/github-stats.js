@@ -1,8 +1,8 @@
 // Vercel serverless function. Holds the GitHub token server-side only
 // (read from process.env.GITHUB_TOKEN, never a VITE_-prefixed var, so it's
-// never bundled into client code) and exposes just the two numbers the
-// public REST API can't provide for anyone without authentication: private
-// repo count and true lifetime total commits.
+// never bundled into client code) and exposes two numbers the public REST
+// API can't provide for anyone without authentication: true total repo
+// count (public + private combined) and commits in the past year.
 
 const GITHUB_USERNAME = "oleary11";
 
@@ -27,45 +27,34 @@ export default async function handler(req, res) {
 
   const token = process.env.GITHUB_TOKEN;
   if (!token) {
-    return res.status(200).json({ privateRepos: null, totalCommits: null });
+    return res.status(200).json({ totalRepos: null, commitsPastYear: null });
   }
 
   try {
-    const base = await githubGraphQL(
+    const now = new Date();
+    const oneYearAgo = new Date(now);
+    oneYearAgo.setUTCFullYear(now.getUTCFullYear() - 1);
+
+    const data = await githubGraphQL(
       `query {
         viewer {
-          createdAt
-          repositories(privacy: PRIVATE) {
+          repositories(ownerAffiliations: OWNER) {
             totalCount
+          }
+          contributionsCollection(from: "${oneYearAgo.toISOString()}", to: "${now.toISOString()}") {
+            totalCommitContributions
           }
         }
       }`,
       token
     );
 
-    const privateRepos = base.viewer.repositories.totalCount;
-    const startYear = new Date(base.viewer.createdAt).getUTCFullYear();
-    const currentYear = new Date().getUTCFullYear();
+    const totalRepos = data.viewer.repositories.totalCount;
+    const commitsPastYear = data.viewer.contributionsCollection.totalCommitContributions;
 
-    // contributionsCollection is capped at a 1-year span per call, so query
-    // one aliased sub-field per calendar year in a single request and sum.
-    const yearAliases = [];
-    for (let year = startYear; year <= currentYear; year++) {
-      yearAliases.push(
-        `y${year}: contributionsCollection(from: "${year}-01-01T00:00:00Z", to: "${year}-12-31T23:59:59Z") { totalCommitContributions }`
-      );
-    }
-
-    const commitsData = await githubGraphQL(`query { viewer { ${yearAliases.join("\n")} } }`, token);
-
-    const totalCommits = Object.values(commitsData.viewer).reduce(
-      (sum, year) => sum + (year?.totalCommitContributions ?? 0),
-      0
-    );
-
-    return res.status(200).json({ privateRepos, totalCommits });
+    return res.status(200).json({ totalRepos, commitsPastYear });
   } catch (err) {
     console.error("api/github-stats error:", err.message);
-    return res.status(200).json({ privateRepos: null, totalCommits: null });
+    return res.status(200).json({ totalRepos: null, commitsPastYear: null });
   }
 }

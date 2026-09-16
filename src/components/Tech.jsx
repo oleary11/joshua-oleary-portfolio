@@ -8,22 +8,11 @@ const Tech = () => {
   const xTranslation = useMotionValue(0);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [draggingCount, setDraggingCount] = useState(0);
-  const controlsRef = useRef(null);
 
   useEffect(() => {
-    // Freeze the belt the instant a card is grabbed (draggingCount > 0) so a
-    // held icon disengages immediately instead of still sliding with the
-    // conveyor underneath the pointer. Resuming rebases the loop to wherever
-    // it was frozen (not back to 0) — seamless either way since the content
-    // is duplicated, so any starting offset loops cleanly.
-    if (draggingCount > 0 || !width) {
-      controlsRef.current?.stop();
-      return;
-    }
-
-    const from = xTranslation.get();
-    const distance = width / 2 + 8;
-    controlsRef.current = animate(xTranslation, [from, from - distance], {
+    if (!width) return;
+    const finalPosition = -width / 2 - 8;
+    const controls = animate(xTranslation, [0, finalPosition], {
       repeat: Infinity,
       duration: 35,
       ease: "linear",
@@ -31,8 +20,8 @@ const Tech = () => {
       repeatDelay: 0,
     });
 
-    return () => controlsRef.current?.stop();
-  }, [xTranslation, width, draggingCount]);
+    return controls.stop;
+  }, [xTranslation, width]);
 
   const handleDragStateChange = (dragging) => {
     setDraggingCount((c) => Math.max(0, c + (dragging ? 1 : -1)));
@@ -55,6 +44,7 @@ const Tech = () => {
             hoveredIndex={hoveredIndex}
             setHoveredIndex={setHoveredIndex}
             onDragStateChange={handleDragStateChange}
+            parentX={xTranslation}
           />
         ))}
       </motion.div>
@@ -64,10 +54,14 @@ const Tech = () => {
 
 export default Tech;
 
-const Card = ({ image, idx, hoveredIndex, setHoveredIndex, onDragStateChange }) => {
+const Card = ({ image, idx, hoveredIndex, setHoveredIndex, onDragStateChange, parentX }) => {
   const [isDragging, setIsDragging] = useState(false);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
+  const isDraggingRef = useRef(false);
+  const grabParentXRef = useRef(0);
+  const dragBaseRef = useRef({ x: 0, y: 0 });
+  const unsubscribeRef = useRef(null);
 
   const offset = hoveredIndex !== null ? Math.abs(idx - hoveredIndex) : null;
 
@@ -76,25 +70,73 @@ const Card = ({ image, idx, hoveredIndex, setHoveredIndex, onDragStateChange }) 
   else if (offset === 1) lift = -10;
   else if (offset === 2) lift = -5;
 
-  // framer-motion's own onDragStart only fires after the pointer crosses a
-  // small movement threshold — freezing the belt on that event still lets it
-  // slide for the first few pixels of a hold. Freeze immediately on the raw
-  // pointer press instead, and resume on release regardless of whether an
-  // actual drag ever happened (a plain click never reaches onDragStart at
-  // all, so it needs its own resume path). onDragStateChange's counter is
-  // clamped at 0, so a release firing both onPointerUp and onDragEnd for the
-  // same gesture is harmless.
-  const handlePointerDown = () => onDragStateChange(true);
-  const handlePointerUp = () => onDragStateChange(false);
+  // The belt keeps scrolling the whole time — grabbing an icon shouldn't
+  // pause it, it should detach just that one icon from it. On press,
+  // snapshot the belt's current position and continuously counter-offset
+  // this card's own x by exactly how far the belt has moved since, so its
+  // on-screen spot stays put under a still pointer.
+  const handlePointerDown = () => {
+    onDragStateChange(true);
+    isDraggingRef.current = false;
+    grabParentXRef.current = parentX.get();
+    unsubscribeRef.current = parentX.on("change", (latestParentX) => {
+      if (!isDraggingRef.current) {
+        const compensatedX = grabParentXRef.current - latestParentX;
+        x.set(compensatedX);
+        // Keep this current the whole time it's held so that if framer's
+        // first onDrag call for this gesture fires before its own
+        // onDragStart does (it does — confirmed empirically), the base it
+        // reads is already correct instead of the stale {x:0,y:0} default,
+        // which was causing a permanent offset jump right as dragging began.
+        dragBaseRef.current = { x: compensatedX, y: y.get() };
+      }
+    });
+  };
 
-  const handleDragStart = () => setIsDragging(true);
+  const releaseCompensation = () => {
+    unsubscribeRef.current?.();
+    unsubscribeRef.current = null;
+  };
+
+  const handlePointerUp = () => {
+    onDragStateChange(false);
+    if (!isDraggingRef.current) {
+      releaseCompensation();
+      animate(x, 0, { type: "spring", stiffness: 300, damping: 26 });
+    }
+  };
+
+  // Once a real drag starts, stop trusting framer's automatic style-binding
+  // for position entirely and drive x/y explicitly from the drag's own
+  // cumulative offset each frame (onDrag) — this is the one signal framer
+  // guarantees is in sync with its own gesture recognition, so there's no
+  // handoff window where the belt-compensation subscription and framer's
+  // internal drag handling can both be writing to x on the same frame
+  // (which showed up as the icon drifting back toward the belt right after
+  // you started actively moving it).
+  const handleDragStart = () => {
+    isDraggingRef.current = true;
+    releaseCompensation();
+    dragBaseRef.current = { x: x.get(), y: y.get() };
+    setIsDragging(true);
+  };
+
+  const handleDrag = (event, info) => {
+    x.set(dragBaseRef.current.x + info.offset.x);
+    y.set(dragBaseRef.current.y + info.offset.y);
+  };
 
   const handleDragEnd = (event, info) => {
+    isDraggingRef.current = false;
     setIsDragging(false);
     onDragStateChange(false);
+    // Springs back to 0 — i.e. rejoins the belt's current flow, not the
+    // absolute spot it was originally grabbed from (the belt moved on).
     animate(x, 0, { type: "spring", velocity: info.velocity.x, stiffness: 200, damping: 12, mass: 0.6 });
     animate(y, 0, { type: "spring", velocity: info.velocity.y, stiffness: 200, damping: 12, mass: 0.6 });
   };
+
+  useEffect(() => releaseCompensation, []);
 
   return (
     <motion.div
@@ -107,6 +149,7 @@ const Card = ({ image, idx, hoveredIndex, setHoveredIndex, onDragStateChange }) 
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerUp}
       onDragStart={handleDragStart}
+      onDrag={handleDrag}
       onDragEnd={handleDragEnd}
       animate={!isDragging ? { y: lift } : undefined}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}

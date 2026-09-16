@@ -6,7 +6,7 @@ import { fadeIn, textVariant, easeOut } from "../utils/motion";
 
 const GITHUB_USERNAME = "oleary11";
 const PUBLIC_CACHE_KEY = "gh-stats";
-const PRIVATE_CACHE_KEY = "gh-stats-private";
+const AUTH_CACHE_KEY = "gh-stats-auth";
 const CACHE_TTL_MS = 60 * 60 * 1000;
 
 function useCachedFetch(inView, cacheKey, fetcher) {
@@ -98,13 +98,14 @@ const GitHubStats = () => {
   );
   const publicStats = useCachedFetch(inView, PUBLIC_CACHE_KEY, fetchPublicStats);
 
-  // Private repo count and true lifetime commit totals aren't visible to
-  // anyone via the public REST API, even the account owner — this hits a
-  // server-side function (api/github-stats.js) holding a GitHub token that
-  // never reaches the browser. Independent of the public fetch above: if
+  // True total repo count (public + private) and lifetime commit totals
+  // aren't visible to anyone via the public REST API, even the account
+  // owner — this hits a server-side function (api/github-stats.js) holding
+  // a GitHub token that never reaches the browser. Independent of the
+  // public fetch above: if
   // this comes back null (token not configured yet, GitHub error, etc.),
   // those two stats just show the Stat component's "—" placeholder.
-  const fetchPrivateStats = useCallback(
+  const fetchAuthStats = useCallback(
     () =>
       fetch("/api/github-stats").then((r) => {
         if (!r.ok) throw new Error(String(r.status));
@@ -112,7 +113,7 @@ const GitHubStats = () => {
       }),
     []
   );
-  const privateStats = useCachedFetch(inView, PRIVATE_CACHE_KEY, fetchPrivateStats);
+  const authStats = useCachedFetch(inView, AUTH_CACHE_KEY, fetchAuthStats);
 
   const yearsOnGithub =
     publicStats?.created_at != null
@@ -131,8 +132,8 @@ const GitHubStats = () => {
         variants={fadeIn("up", "spring", 0.1, 0.75)}
         className="mt-12 grid grid-cols-3 gap-4 sm:gap-8 max-w-2xl min-h-[88px]"
       >
-        <Stat target={privateStats?.privateRepos ?? null} label="Private Repos" inView={inView} />
-        <Stat target={privateStats?.totalCommits ?? null} label="Total Commits" inView={inView} />
+        <Stat target={authStats?.totalRepos ?? null} label="Total Repos" inView={inView} />
+        <Stat target={authStats?.commitsPastYear ?? null} label="Commits Past Year" inView={inView} />
         <Stat target={yearsOnGithub} label="Years on GitHub" inView={inView} />
       </motion.div>
 
