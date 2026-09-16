@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 import {
   Hero, About, Contact, Experience, Navbar, Tech, Works,
-  Education, RecentBlogs, StarsCanvas, Loader,
+  Education, RecentBlogs, StarsCanvas, Loader, GitHubStats,
 } from "../components";
 
 const PortfolioHome = () => {
@@ -27,6 +27,7 @@ const PortfolioHome = () => {
         <Experience />
         <Education />
         <Tech />
+        <GitHubStats />
         <RecentBlogs />
         <div className="relative z-0">
           <Contact />

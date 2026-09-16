@@ -47,6 +47,10 @@ const Tech = () => {
 export default Tech;
 
 const Card = ({ image, idx, hoveredIndex, setHoveredIndex }) => {
+  const [isDragging, setIsDragging] = useState(false);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
   const offset = hoveredIndex !== null ? Math.abs(idx - hoveredIndex) : null;
 
   let lift = 0;
@@ -54,10 +58,22 @@ const Card = ({ image, idx, hoveredIndex, setHoveredIndex }) => {
   else if (offset === 1) lift = -10;
   else if (offset === 2) lift = -5;
 
+  const handleDragEnd = (event, info) => {
+    setIsDragging(false);
+    animate(x, 0, { type: "spring", velocity: info.velocity.x, stiffness: 200, damping: 12, mass: 0.6 });
+    animate(y, 0, { type: "spring", velocity: info.velocity.y, stiffness: 200, damping: 12, mass: 0.6 });
+  };
+
   return (
     <motion.div
-      className="relative h-[120px] min-w-[100px] flex justify-center items-center"
-      animate={{ y: lift }}
+      className="relative h-[120px] min-w-[100px] flex justify-center items-center cursor-grab active:cursor-grabbing touch-none"
+      style={{ x, y }}
+      drag
+      dragMomentum={false}
+      whileDrag={{ scale: 1.15, zIndex: 10 }}
+      onDragStart={() => setIsDragging(true)}
+      onDragEnd={handleDragEnd}
+      animate={!isDragging ? { y: lift } : undefined}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
       onHoverStart={() => setHoveredIndex(idx)}
       onHoverEnd={() => setHoveredIndex(null)}
@@ -65,7 +81,8 @@ const Card = ({ image, idx, hoveredIndex, setHoveredIndex }) => {
       <img
         src={image}
         alt="Skill"
-        className="w-[80px] h-[80px] object-contain"
+        draggable={false}
+        className="w-[80px] h-[80px] object-contain pointer-events-none"
       />
     </motion.div>
   );

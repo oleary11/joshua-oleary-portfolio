@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaTerminal } from "react-icons/fa";
 
 import { styles } from "../styles";
 import { navLinks } from "../constants";
 import { logo, menu, close } from "../assets";
+import Terminal from "./Terminal";
 
 const Navbar = () => {
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [terminalOpen, setTerminalOpen] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === "/";
 
@@ -26,6 +28,19 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
 
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleKey = (e) => {
+      const tag = document.activeElement?.tagName;
+      const typing = tag === "INPUT" || tag === "TEXTAREA" || document.activeElement?.isContentEditable;
+      if (e.key === "`" && !typing) {
+        e.preventDefault();
+        setTerminalOpen((o) => !o);
+      }
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
   }, []);
 
   return (
@@ -86,6 +101,17 @@ const Navbar = () => {
               <FaGithub size={22} />
             </a>
           </li>
+          <li>
+            <button
+              onClick={() => setTerminalOpen((o) => !o)}
+              className="text-secondary hover:text-white transition-colors duration-300 flex items-center"
+              aria-label="Open terminal (press `)"
+              title="Open terminal (press `)"
+              data-cursor="Open"
+            >
+              <FaTerminal size={19} />
+            </button>
+          </li>
         </ul>
 
         {/* Mobile Menu */}
@@ -124,10 +150,21 @@ const Navbar = () => {
               >
                 <Link to="/blog">Blog</Link>
               </li>
+              <li
+                className="font-roboto font-medium cursor-pointer text-[16px] text-secondary hover:text-white"
+                onClick={() => {
+                  setToggle(false);
+                  setTerminalOpen(true);
+                }}
+              >
+                Terminal
+              </li>
             </ul>
           </div>
         </div>
       </div>
+
+      <Terminal open={terminalOpen} onClose={() => setTerminalOpen(false)} />
     </nav>
   );
 };

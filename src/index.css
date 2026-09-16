@@ -18,6 +18,11 @@
   body.cursor-none-fine * {
     cursor: none !important;
   }
+
+  body.cursor-none-fine input,
+  body.cursor-none-fine textarea {
+    cursor: text !important;
+  }
 }
 
 .hash-span {

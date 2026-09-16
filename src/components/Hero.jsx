@@ -3,6 +3,7 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import myimg from "../assets/myimg.png";
 import { resume } from "../assets";
 import { easeOut } from "../utils/motion";
+import { celebrate } from "../utils/confetti";
 
 const Hero = () => {
   const wrapperRef = useRef(null);
@@ -67,6 +68,7 @@ const Hero = () => {
             href={resume}
             download="Joshua_OLeary_Resume.pdf"
             data-cursor="Resume"
+            onClick={(e) => celebrate(e.currentTarget)}
             className="border-2 border-[#4A6D8C] text-white no-underline rounded-[100px] font-semibold px-8 py-4 inline-block hover:bg-[#4A6D8C] transition-colors duration-200"
           >
             Download Resume

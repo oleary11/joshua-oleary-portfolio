@@ -36,6 +36,17 @@ import sql from "../assets/tech/sql.png";
 import linux from "../assets/tech/linux.png";
 import bootstrap from "../assets/tech/bootstrap.png";
 import githubIcon from "../assets/tech/github.png";
+import bash from "../assets/tech/bash.svg";
+import dotnet from "../assets/tech/dotnet.svg";
+import flask from "../assets/tech/flask.svg";
+import expo from "../assets/tech/expo.svg";
+import postgresql from "../assets/tech/postgresql.svg";
+import redis from "../assets/tech/redis.svg";
+import supabase from "../assets/tech/supabase.svg";
+import claude from "../assets/tech/claude.svg";
+import nextjs from "../assets/tech/nextjs.svg";
+import stripe from "../assets/tech/stripe.svg";
+import posthog from "../assets/tech/posthog.svg";
 
 export const navLinks = [
   { id: "about", title: "About" },
@@ -71,6 +82,17 @@ const technologies = [
   { name: "Git", icon: git },
   { name: "GitHub", icon: githubIcon },
   { name: "Linux", icon: linux },
+  { name: "Bash", icon: bash },
+  { name: ".NET", icon: dotnet },
+  { name: "Flask", icon: flask },
+  { name: "Expo", icon: expo },
+  { name: "PostgreSQL", icon: postgresql },
+  { name: "Redis", icon: redis },
+  { name: "Supabase", icon: supabase },
+  { name: "Claude", icon: claude },
+  { name: "Next.js", icon: nextjs },
+  { name: "Stripe", icon: stripe },
+  { name: "PostHog", icon: posthog },
 ];
 
 const experiences = [

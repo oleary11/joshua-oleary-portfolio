@@ -8,6 +8,7 @@ const CustomCursor = () => {
   const [enabled, setEnabled] = useState(false);
   const [label, setLabel] = useState(null);
   const [hovering, setHovering] = useState(false);
+  const [overTextInput, setOverTextInput] = useState(false);
 
   const x = useMotionValue(-100);
   const y = useMotionValue(-100);
@@ -28,6 +29,14 @@ const CustomCursor = () => {
     };
 
     const over = (e) => {
+      const textInput = e.target.closest?.("input, textarea");
+      setOverTextInput(Boolean(textInput));
+      if (textInput) {
+        setLabel(null);
+        setHovering(false);
+        return;
+      }
+
       const labelTarget = e.target.closest?.("[data-cursor]");
       if (labelTarget) {
         setLabel(labelTarget.getAttribute("data-cursor"));
@@ -51,13 +60,13 @@ const CustomCursor = () => {
 
   if (!enabled) return null;
 
-  const size = label ? 68 : hovering ? 32 : 14;
+  const size = overTextInput ? 0 : label ? 68 : hovering ? 32 : 14;
 
   return (
     <motion.div
       aria-hidden="true"
       className="pointer-events-none fixed top-0 left-0 z-[9999] hidden md:flex items-center justify-center rounded-full border border-white mix-blend-difference"
-      style={{ x: springX, y: springY, translateX: "-50%", translateY: "-50%" }}
+      style={{ x: springX, y: springY, translateX: "-50%", translateY: "-50%", opacity: overTextInput ? 0 : 1 }}
       animate={{ width: size, height: size }}
       transition={{ type: "spring", stiffness: 320, damping: 26 }}
     >

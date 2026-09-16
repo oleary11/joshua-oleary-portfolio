@@ -12,6 +12,7 @@ import ScrollProgressBar from './ScrollProgressBar';
 import BackToTop from './BackToTop';
 import CustomCursor from './CustomCursor';
 import Loader from './Loader';
+import GitHubStats from './GitHubStats';
 
 export {
   Hero,
@@ -27,6 +28,7 @@ export {
   BackToTop,
   CustomCursor,
   Loader,
+  GitHubStats,
   EarthCanvas,
   StarsCanvas,
 }
