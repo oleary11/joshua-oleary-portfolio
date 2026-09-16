@@ -17,12 +17,19 @@ function normalizePost(p) {
 
 export async function fetchPosts() {
   if (!isConfigured) return { data: staticPosts, error: null };
-  const { data, error } = await supabase
-    .from('posts')
-    .select('*')
-    .eq('is_published', true)
-    .order('published_at', { ascending: false });
-  return { data: data?.map(normalizePost) ?? [], error };
+  try {
+    const { data, error } = await supabase
+      .from('posts')
+      .select('*')
+      .eq('is_published', true)
+      .order('published_at', { ascending: false });
+    if (error) throw error;
+    return { data: data?.map(normalizePost) ?? [], error: null };
+  } catch (error) {
+    // Backend unreachable (DB down, project paused/deleted, network error) —
+    // fall back to the static posts rather than leaving callers hanging.
+    return { data: staticPosts, error };
+  }
 }
 
 export async function fetchPost(slug) {
@@ -30,13 +37,19 @@ export async function fetchPost(slug) {
     const post = staticPosts.find((p) => p.slug === slug) ?? null;
     return { data: post, error: post ? null : { message: 'Not found' } };
   }
-  const { data, error } = await supabase
-    .from('posts')
-    .select('*')
-    .eq('slug', slug)
-    .eq('is_published', true)
-    .single();
-  return { data: data ? normalizePost(data) : null, error };
+  try {
+    const { data, error } = await supabase
+      .from('posts')
+      .select('*')
+      .eq('slug', slug)
+      .eq('is_published', true)
+      .single();
+    if (error) throw error;
+    return { data: data ? normalizePost(data) : null, error: null };
+  } catch (error) {
+    const post = staticPosts.find((p) => p.slug === slug) ?? null;
+    return { data: post, error: post ? null : error };
+  }
 }
 
 // ── Admin ────────────────────────────────────────────────────

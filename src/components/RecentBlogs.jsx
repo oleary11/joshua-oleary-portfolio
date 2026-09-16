@@ -55,10 +55,10 @@ const RecentBlogs = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchPosts().then(({ data }) => {
-      setPosts((data ?? []).slice(0, 3));
-      setLoading(false);
-    });
+    fetchPosts()
+      .then(({ data }) => setPosts((data ?? []).slice(0, 3)))
+      .catch(() => setPosts([]))
+      .finally(() => setLoading(false));
   }, []);
 
   return (

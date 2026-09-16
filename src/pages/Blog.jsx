@@ -64,10 +64,10 @@ const Blog = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchPosts().then(({ data }) => {
-      setPosts(data ?? []);
-      setLoading(false);
-    });
+    fetchPosts()
+      .then(({ data }) => setPosts(data ?? []))
+      .catch(() => setPosts([]))
+      .finally(() => setLoading(false));
   }, []);
 
   return (

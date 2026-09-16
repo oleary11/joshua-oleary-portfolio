@@ -7,6 +7,7 @@ const Tech = () => {
   let [ref, { width }] = useMeasure();
   const xTranslation = useMotionValue(0);
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [draggingCount, setDraggingCount] = useState(0);
 
   useEffect(() => {
     const finalPosition = -width / 2 - 8;
@@ -21,8 +22,12 @@ const Tech = () => {
     return controls.stop;
   }, [xTranslation, width]);
 
+  const handleDragStateChange = (dragging) => {
+    setDraggingCount((c) => Math.max(0, c + (dragging ? 1 : -1)));
+  };
+
   return (
-    <div className="relative pb-36 overflow-hidden mb-12">
+    <div className={`relative pb-36 mb-12 ${draggingCount > 0 ? "overflow-visible" : "overflow-hidden"}`}>
       <h2 className="my-20 text-center text-4xl font-bold">Skills</h2>
 
       <motion.div
@@ -37,6 +42,7 @@ const Tech = () => {
             idx={idx}
             hoveredIndex={hoveredIndex}
             setHoveredIndex={setHoveredIndex}
+            onDragStateChange={handleDragStateChange}
           />
         ))}
       </motion.div>
@@ -46,7 +52,7 @@ const Tech = () => {
 
 export default Tech;
 
-const Card = ({ image, idx, hoveredIndex, setHoveredIndex }) => {
+const Card = ({ image, idx, hoveredIndex, setHoveredIndex, onDragStateChange }) => {
   const [isDragging, setIsDragging] = useState(false);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -58,32 +64,40 @@ const Card = ({ image, idx, hoveredIndex, setHoveredIndex }) => {
   else if (offset === 1) lift = -10;
   else if (offset === 2) lift = -5;
 
+  const handleDragStart = () => {
+    setIsDragging(true);
+    onDragStateChange(true);
+  };
+
   const handleDragEnd = (event, info) => {
     setIsDragging(false);
+    onDragStateChange(false);
     animate(x, 0, { type: "spring", velocity: info.velocity.x, stiffness: 200, damping: 12, mass: 0.6 });
     animate(y, 0, { type: "spring", velocity: info.velocity.y, stiffness: 200, damping: 12, mass: 0.6 });
   };
 
   return (
     <motion.div
-      className="relative h-[120px] min-w-[100px] flex justify-center items-center cursor-grab active:cursor-grabbing touch-none"
+      className="relative h-[130px] w-[110px] flex justify-center items-center cursor-grab active:cursor-grabbing touch-none"
       style={{ x, y }}
       drag
       dragMomentum={false}
-      whileDrag={{ scale: 1.15, zIndex: 10 }}
-      onDragStart={() => setIsDragging(true)}
+      whileDrag={{ scale: 1.15, zIndex: 50 }}
+      onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
       animate={!isDragging ? { y: lift } : undefined}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
       onHoverStart={() => setHoveredIndex(idx)}
       onHoverEnd={() => setHoveredIndex(null)}
     >
-      <img
-        src={image}
-        alt="Skill"
-        draggable={false}
-        className="w-[80px] h-[80px] object-contain pointer-events-none"
-      />
+      <div className="w-[92px] h-[92px] rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center">
+        <img
+          src={image}
+          alt="Skill"
+          draggable={false}
+          className="w-[56px] h-[56px] object-contain pointer-events-none"
+        />
+      </div>
     </motion.div>
   );
 };

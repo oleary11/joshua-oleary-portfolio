@@ -20,14 +20,8 @@ function App() {
       && window.matchMedia('(prefers-reduced-motion: reduce)').matches
   );
 
-  return (
-    <BrowserRouter>
-      {!reduceMotion && (
-        <ReactLenis
-          root
-          options={{ lerp: 0.1, duration: 1.2, smoothWheel: true, syncTouch: false }}
-        />
-      )}
+  const routes = (
+    <>
       <ScrollToTop />
       <ScrollProgressBar />
       <BackToTop />
@@ -51,6 +45,20 @@ function App() {
           <ProtectedRoute><AdminEditor /></ProtectedRoute>
         } />
       </Routes>
+    </>
+  );
+
+  return (
+    <BrowserRouter>
+      {reduceMotion ? (
+        routes
+      ) : (
+        // Nested as children (not self-closing) so descendants can reach the
+        // Lenis instance via useLenis() — e.g. to stop/start scroll on demand.
+        <ReactLenis root options={{ lerp: 0.1, duration: 1.2, smoothWheel: true, syncTouch: false }}>
+          {routes}
+        </ReactLenis>
+      )}
     </BrowserRouter>
   );
 }

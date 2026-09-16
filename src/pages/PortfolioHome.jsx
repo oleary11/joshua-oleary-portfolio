@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useLenis } from "lenis/react";
 
 import {
   Hero, About, Contact, Experience, Navbar, Tech, Works,
@@ -8,6 +9,18 @@ import {
 
 const PortfolioHome = () => {
   const [appReady, setAppReady] = useState(false);
+  const lenis = useLenis();
+
+  useEffect(() => {
+    // Belt-and-suspenders: Lenis intercepts wheel/touch itself (stopped via
+    // lenis.stop()), and body overflow blocks native scrollbar dragging too.
+    document.body.style.overflow = appReady ? "" : "hidden";
+    if (appReady) lenis?.start();
+    else lenis?.stop();
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [appReady, lenis]);
 
   return (
     <>

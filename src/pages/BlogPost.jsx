@@ -45,15 +45,17 @@ const BlogPost = () => {
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    Promise.all([fetchPost(slug), fetchPosts()]).then(([postRes, postsRes]) => {
-      if (!postRes.data) { setNotFound(true); setLoading(false); return; }
-      setPost(postRes.data);
-      setAllPosts(postsRes.data ?? []);
-      setLoading(false);
-      // Track view and fetch count after render
-      trackView(slug);
-      fetchViewCount(slug).then(setViews);
-    });
+    Promise.all([fetchPost(slug), fetchPosts()])
+      .then(([postRes, postsRes]) => {
+        if (!postRes.data) { setNotFound(true); return; }
+        setPost(postRes.data);
+        setAllPosts(postsRes.data ?? []);
+        // Track view and fetch count after render
+        trackView(slug).catch(() => {});
+        fetchViewCount(slug).then(setViews).catch(() => {});
+      })
+      .catch(() => setNotFound(true))
+      .finally(() => setLoading(false));
   }, [slug]);
 
   if (loading) return (

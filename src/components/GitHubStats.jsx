@@ -15,6 +15,12 @@ const Stat = ({ target, label, inView }) => {
 
   useEffect(() => {
     if (!inView || target == null) return;
+    // A target of exactly 0 means count (already 0) never fires a "change"
+    // event, so the initial "—" placeholder would never get replaced.
+    if (target === 0) {
+      setDisplay("0");
+      return;
+    }
     const controls = animate(count, target, { duration: 1.5, ease: easeOut });
     const unsubscribe = rounded.on("change", setDisplay);
     return () => {
@@ -31,9 +37,25 @@ const Stat = ({ target, label, inView }) => {
   );
 };
 
+const StatsImage = ({ src, alt }) => {
+  const [failed, setFailed] = useState(false);
+  if (failed) return null;
+  return (
+    <img
+      src={src}
+      alt={alt}
+      onError={() => setFailed(true)}
+      className="rounded-xl max-w-full"
+    />
+  );
+};
+
 const GitHubStats = () => {
   const [stats, setStats] = useState(null);
   const [status, setStatus] = useState("idle");
+  // Always-mounted, real-size wrapper — the fetch trigger below. A
+  // conditionally-swapped zero-height placeholder here would make
+  // useInView's area-based threshold (amount: 0.4) never satisfy.
   const statsRef = useRef(null);
   const inView = useInView(statsRef, { once: true, amount: 0.4 });
 
@@ -80,32 +102,31 @@ const GitHubStats = () => {
         <h2 className={styles.sectionHeadText}>Always Building.</h2>
       </motion.div>
 
-      {status === "success" && (
-        <motion.div
-          ref={statsRef}
-          variants={fadeIn("up", "spring", 0.1, 0.75)}
-          className="mt-12 grid grid-cols-3 gap-4 sm:gap-8 max-w-2xl"
-        >
-          <Stat target={stats.public_repos} label="Public Repos" inView={inView} />
-          <Stat target={stats.followers} label="Followers" inView={inView} />
-          <Stat target={yearsOnGithub} label="Years on GitHub" inView={inView} />
-        </motion.div>
-      )}
-      {status !== "success" && <div ref={statsRef} />}
+      <motion.div
+        ref={statsRef}
+        variants={fadeIn("up", "spring", 0.1, 0.75)}
+        className="mt-12 grid grid-cols-3 gap-4 sm:gap-8 max-w-2xl min-h-[88px]"
+      >
+        {status === "success" && (
+          <>
+            <Stat target={stats.public_repos} label="Public Repos" inView={inView} />
+            <Stat target={stats.followers} label="Followers" inView={inView} />
+            <Stat target={yearsOnGithub} label="Years on GitHub" inView={inView} />
+          </>
+        )}
+      </motion.div>
 
       <motion.div
         variants={fadeIn("up", "spring", 0.2, 0.75)}
         className="mt-12 flex flex-col md:flex-row gap-6 justify-center items-center flex-wrap"
       >
-        <img
+        <StatsImage
           src={`https://github-readme-stats.vercel.app/api?username=${GITHUB_USERNAME}&show_icons=true&theme=tokyonight&hide_border=true&bg_color=1C2430&title_color=5B7A99&icon_color=5B7A99&text_color=9AA3B0`}
           alt="GitHub Stats"
-          className="rounded-xl max-w-full"
         />
-        <img
+        <StatsImage
           src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${GITHUB_USERNAME}&layout=compact&theme=tokyonight&hide_border=true&bg_color=1C2430&title_color=5B7A99&text_color=9AA3B0&langs_count=8`}
           alt="Top Languages"
-          className="rounded-xl max-w-full"
         />
       </motion.div>
     </>

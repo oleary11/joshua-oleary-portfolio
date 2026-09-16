@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLenis } from "lenis/react";
 import { IoClose } from "react-icons/io5";
 import { runCommand } from "./terminal/commands";
 import { downloadResume } from "../utils/downloadResume";
@@ -19,10 +21,17 @@ const Terminal = ({ open, onClose }) => {
   const panelRef = useRef(null);
   const logRef = useRef(null);
   const inputRef = useRef(null);
+  const lenis = useLenis();
 
   useEffect(() => {
     if (open) inputRef.current?.focus();
-  }, [open]);
+    document.body.style.overflow = open ? "hidden" : "";
+    if (open) lenis?.stop();
+    else lenis?.start();
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open, lenis]);
 
   useEffect(() => {
     logRef.current?.scrollTo({ top: logRef.current.scrollHeight });
@@ -75,7 +84,7 @@ const Terminal = ({ open, onClose }) => {
     }
   };
 
-  return (
+  return createPortal(
     <AnimatePresence>
       {open && (
         <motion.div
@@ -151,7 +160,8 @@ const Terminal = ({ open, onClose }) => {
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 };
 
