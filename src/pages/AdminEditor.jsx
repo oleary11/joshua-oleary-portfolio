@@ -17,10 +17,10 @@ const calcReadTime = (blocks) => {
 
 // ── Block renderers ──────────────────────────────────────────
 
-const inputCls = 'w-full bg-[#1d1836] border border-white/10 rounded-lg px-4 py-2.5 text-white text-[14px] placeholder-secondary/40 focus:outline-none focus:border-[#915EFF] transition-colors resize-none';
+const inputCls = 'w-full bg-[#1C2430] border border-white/10 rounded-lg px-4 py-2.5 text-white text-[14px] placeholder-secondary/40 focus:outline-none focus:border-[#5B7A99] transition-colors resize-none';
 
 const BlockEditor = ({ block, index, total, onChange, onDelete, onMove }) => {
-  const accentColor = { h2: '#915EFF', p: '#aaa6c3', ul: '#56ccf2' }[block.type];
+  const accentColor = { h2: '#5B7A99', p: '#9AA3B0', ul: '#56ccf2' }[block.type];
 
   return (
     <motion.div
@@ -122,7 +122,7 @@ const Preview = ({ meta, blocks }) => (
         <ul key={i} className="mt-3 mb-4 flex flex-col gap-2">
           {block.items.map((item, j) => (
             <li key={j} className="flex gap-2 text-secondary text-[15px]">
-              <span className="text-[#915EFF]">•</span>{item}
+              <span className="text-[#5B7A99]">•</span>{item}
             </li>
           ))}
         </ul>
@@ -237,21 +237,21 @@ const AdminEditor = () => {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setTab(tab === 'write' ? 'preview' : 'write')}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#1d1836] border border-white/10 text-secondary hover:text-white text-[13px] transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#1C2430] border border-white/10 text-secondary hover:text-white text-[13px] transition-colors"
           >
             {tab === 'write' ? <><FaEye size={12} /> Preview</> : <><FaEdit size={12} /> Edit</>}
           </button>
           <button
             onClick={() => handleSave(false)}
             disabled={saving}
-            className="px-4 py-1.5 rounded-lg bg-[#1d1836] border border-white/10 text-secondary hover:text-white text-[13px] disabled:opacity-50 transition-colors"
+            className="px-4 py-1.5 rounded-lg bg-[#1C2430] border border-white/10 text-secondary hover:text-white text-[13px] disabled:opacity-50 transition-colors"
           >
             Save Draft
           </button>
           <button
             onClick={() => handleSave(true)}
             disabled={saving}
-            className="px-4 py-1.5 rounded-lg bg-[#915EFF] hover:bg-[#7c4fe0] text-white text-[13px] font-medium disabled:opacity-50 transition-colors"
+            className="px-4 py-1.5 rounded-lg bg-[#5B7A99] hover:bg-[#4A6580] text-white text-[13px] font-medium disabled:opacity-50 transition-colors"
           >
             {saving ? 'Saving…' : 'Publish'}
           </button>
@@ -275,13 +275,13 @@ const AdminEditor = () => {
                 value={meta.title}
                 onChange={(e) => setMeta((p) => ({ ...p, title: e.target.value }))}
                 placeholder="Post title…"
-                className="bg-transparent border-b border-white/20 focus:border-[#915EFF] outline-none text-white font-black text-[32px] pb-2 placeholder-white/20 transition-colors"
+                className="bg-transparent border-b border-white/20 focus:border-[#5B7A99] outline-none text-white font-black text-[32px] pb-2 placeholder-white/20 transition-colors"
               />
               <input
                 value={meta.subtitle}
                 onChange={(e) => setMeta((p) => ({ ...p, subtitle: e.target.value }))}
                 placeholder="Subtitle (optional)…"
-                className="bg-transparent border-b border-white/10 focus:border-[#915EFF] outline-none text-secondary italic text-[16px] pb-2 placeholder-secondary/30 transition-colors"
+                className="bg-transparent border-b border-white/10 focus:border-[#5B7A99] outline-none text-secondary italic text-[16px] pb-2 placeholder-secondary/30 transition-colors"
               />
 
               <div className="grid grid-cols-2 gap-4 mt-2">
@@ -293,12 +293,12 @@ const AdminEditor = () => {
                       value={meta.slug}
                       onChange={(e) => { setSlugLocked(true); setMeta((p) => ({ ...p, slug: e.target.value })); }}
                       placeholder="post-slug"
-                      className="flex-1 bg-[#1d1836] border border-white/10 rounded-lg px-3 py-2 text-white text-[13px] focus:outline-none focus:border-[#915EFF] transition-colors font-mono"
+                      className="flex-1 bg-[#1C2430] border border-white/10 rounded-lg px-3 py-2 text-white text-[13px] focus:outline-none focus:border-[#5B7A99] transition-colors font-mono"
                     />
                     {!isEdit && (
                       <button
                         onClick={() => { setSlugLocked(false); setMeta((p) => ({ ...p, slug: slugify(p.title) })); }}
-                        className="px-2 py-1 text-[11px] rounded bg-[#1d1836] border border-white/10 text-secondary hover:text-white transition-colors"
+                        className="px-2 py-1 text-[11px] rounded bg-[#1C2430] border border-white/10 text-secondary hover:text-white transition-colors"
                         title="Re-generate from title"
                       >
                         ↺
@@ -313,7 +313,7 @@ const AdminEditor = () => {
                   <select
                     value={meta.category}
                     onChange={(e) => setMeta((p) => ({ ...p, category: e.target.value }))}
-                    className="bg-[#1d1836] border border-white/10 rounded-lg px-3 py-2 text-white text-[13px] focus:outline-none focus:border-[#915EFF] transition-colors"
+                    className="bg-[#1C2430] border border-white/10 rounded-lg px-3 py-2 text-white text-[13px] focus:outline-none focus:border-[#5B7A99] transition-colors"
                   >
                     {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
                   </select>
@@ -326,7 +326,7 @@ const AdminEditor = () => {
                     value={meta.tags}
                     onChange={(e) => setMeta((p) => ({ ...p, tags: e.target.value }))}
                     placeholder="OSINT, Red Team, Physical Security"
-                    className="bg-[#1d1836] border border-white/10 rounded-lg px-3 py-2 text-white text-[13px] focus:outline-none focus:border-[#915EFF] transition-colors"
+                    className="bg-[#1C2430] border border-white/10 rounded-lg px-3 py-2 text-white text-[13px] focus:outline-none focus:border-[#5B7A99] transition-colors"
                   />
                 </div>
 
@@ -338,7 +338,7 @@ const AdminEditor = () => {
                     onChange={(e) => setMeta((p) => ({ ...p, excerpt: e.target.value }))}
                     placeholder="Short summary shown on blog cards…"
                     rows={2}
-                    className="bg-[#1d1836] border border-white/10 rounded-lg px-3 py-2 text-white text-[13px] focus:outline-none focus:border-[#915EFF] transition-colors resize-none"
+                    className="bg-[#1C2430] border border-white/10 rounded-lg px-3 py-2 text-white text-[13px] focus:outline-none focus:border-[#5B7A99] transition-colors resize-none"
                   />
                 </div>
               </div>
@@ -375,7 +375,7 @@ const AdminEditor = () => {
                 <button
                   key={type}
                   onClick={() => addBlock(type)}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#1d1836] border border-white/10 text-secondary hover:text-white hover:border-[#915EFF] text-[13px] transition-all"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#1C2430] border border-white/10 text-secondary hover:text-white hover:border-[#5B7A99] text-[13px] transition-all"
                 >
                   <FaPlus size={10} /> {label}
                 </button>

@@ -23,6 +23,7 @@ import {
   desertcandleworks,
   platrly,
   idahostumpgrinders,
+  pinpassport,
 } from "../assets";
 
 import cSharp from "../assets/tech/cSharp.png";
@@ -44,10 +45,10 @@ export const navLinks = [
 ];
 
 const services = [
-  { title: "Software Engineer", icon: web },
-  { title: "Network Engineer", icon: backend },
-  { title: "Full Stack Developer", icon: mobile },
-  { title: "Technical Support Engineer", icon: creator },
+  { title: "Full-Stack Development", icon: web },
+  { title: "Backend & Cloud Systems", icon: backend },
+  { title: "Mobile App Development", icon: mobile },
+  { title: "AI-Assisted Development", icon: creator },
 ];
 
 const technologies = [
@@ -132,6 +133,20 @@ const experiences = [
 ];
 
 const projects = [
+  {
+    name: "Pin Passport",
+    description:
+      "A cross-platform (iOS, Android, and web) golf round tracker: log courses you've played, keep a dream-course bucket list, browse an interactive world map of your rounds, and compete on friends/world leaderboards in the Clubhouse. GPS verification confirms you were actually at the course before a round counts toward the global leaderboard.",
+    tags: [
+      { name: "React Native", color: "blue-text-gradient" },
+      { name: "TypeScript", color: "green-text-gradient" },
+      { name: "Supabase", color: "pink-text-gradient" },
+      { name: "Google Maps API", color: "orange-text-gradient" },
+    ],
+    image: pinpassport,
+    source_code_link: null,
+    live_link: "https://getpinpassport.com",
+  },
   {
     name: "Platrly",
     description:

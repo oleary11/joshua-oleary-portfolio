@@ -52,14 +52,14 @@ export default {
       },
       colors: {
         primary: "#050816",
-        secondary: "#aaa6c3",
-        tertiary: "#151030",
-        "black-100": "#100d25",
-        "black-200": "#090325",
+        secondary: "#9AA3B0",
+        tertiary: "#161B24",
+        "black-100": "#12151C",
+        "black-200": "#0A0D13",
         "white-100": "#f3f3f3",
       },
       boxShadow: {
-        card: "0px 35px 120px -15px #211e35",
+        card: "0px 35px 120px -15px #1A1E26",
       },
       screens: {
         xs: "450px",

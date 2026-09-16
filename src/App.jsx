@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ReactLenis } from 'lenis/react';
 
-import { BackToTop, ScrollProgressBar } from './components';
+import { BackToTop, ScrollProgressBar, CustomCursor } from './components';
+import GrainOverlay from './components/GrainOverlay';
 import ScrollToTop from './components/ScrollToTop';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -12,11 +15,24 @@ import AdminDashboard from './pages/AdminDashboard';
 import AdminEditor    from './pages/AdminEditor';
 
 function App() {
+  const [reduceMotion] = useState(
+    () => typeof window !== 'undefined'
+      && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+
   return (
     <BrowserRouter>
+      {!reduceMotion && (
+        <ReactLenis
+          root
+          options={{ lerp: 0.1, duration: 1.2, smoothWheel: true, syncTouch: false }}
+        />
+      )}
       <ScrollToTop />
-<ScrollProgressBar />
+      <ScrollProgressBar />
       <BackToTop />
+      <GrainOverlay />
+      <CustomCursor />
       <Routes>
         {/* Public */}
         <Route path="/"            element={<PortfolioHome />} />

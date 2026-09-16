@@ -17,12 +17,12 @@ const Education = () => {
       {/* Degree Card */}
       <motion.div
         variants={fadeIn("up", "spring", 0.1, 0.75)}
-        className="mt-10 bg-[#1d1836] rounded-2xl p-8 shadow-lg border border-white/5"
+        className="mt-10 bg-[#1C2430] rounded-2xl p-8 shadow-lg border border-white/5"
       >
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
           <div>
             <h3 className="text-white text-[24px] font-bold">{school}</h3>
-            <p className="text-[#915EFF] text-[16px] font-semibold mt-1">{degree}</p>
+            <p className="text-[#5B7A99] text-[16px] font-semibold mt-1">{degree}</p>
             <p className="text-secondary text-[14px] mt-1">{location}</p>
           </div>
           <span className="text-secondary text-[14px] font-medium whitespace-nowrap">{date}</span>
@@ -35,7 +35,7 @@ const Education = () => {
             {courses.map((course) => (
               <span
                 key={course}
-                className="bg-[#915EFF]/20 text-[#915EFF] text-[13px] px-3 py-1 rounded-full border border-[#915EFF]/30"
+                className="bg-[#5B7A99]/20 text-[#5B7A99] text-[13px] px-3 py-1 rounded-full border border-[#5B7A99]/30"
               >
                 {course}
               </span>
@@ -50,7 +50,7 @@ const Education = () => {
         {/* Certifications */}
         <motion.div
           variants={fadeIn("up", "spring", 0.2, 0.75)}
-          className="bg-[#1d1836] rounded-2xl p-6 shadow-lg border border-white/5"
+          className="bg-[#1C2430] rounded-2xl p-6 shadow-lg border border-white/5"
         >
           <h4 className="text-white font-bold text-[16px] mb-4">Certifications</h4>
           <ul className="space-y-3">
@@ -66,7 +66,7 @@ const Education = () => {
         {/* Awards */}
         <motion.div
           variants={fadeIn("up", "spring", 0.3, 0.75)}
-          className="bg-[#1d1836] rounded-2xl p-6 shadow-lg border border-white/5"
+          className="bg-[#1C2430] rounded-2xl p-6 shadow-lg border border-white/5"
         >
           <h4 className="text-white font-bold text-[16px] mb-4">Awards</h4>
           <ul className="space-y-3">
@@ -82,7 +82,7 @@ const Education = () => {
         {/* Leadership */}
         <motion.div
           variants={fadeIn("up", "spring", 0.4, 0.75)}
-          className="bg-[#1d1836] rounded-2xl p-6 shadow-lg border border-white/5"
+          className="bg-[#1C2430] rounded-2xl p-6 shadow-lg border border-white/5"
         >
           <h4 className="text-white font-bold text-[16px] mb-4">Leadership</h4>
           <ul className="space-y-3">

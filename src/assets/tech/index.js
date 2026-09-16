@@ -18,6 +18,17 @@ import linux from "./linux.png";
 import sql from "./sql.png"; // <-- new
 import ruby from "./ruby.png"; // <-- need this file
 import cLogo from "./c.png"; // <-- need this file
+import posthog from "./posthog.svg";
+import dotnet from "./dotnet.svg";
+import flask from "./flask.svg";
+import expo from "./expo.svg";
+import postgresql from "./postgresql.svg";
+import redis from "./redis.svg";
+import supabase from "./supabase.svg";
+import bash from "./bash.svg";
+import claude from "./claude.svg";
+import nextjs from "./nextjs.svg";
+import stripe from "./stripe.svg";
 
 export const techImages = [
   cLogo,
@@ -31,13 +42,24 @@ export const techImages = [
   html,
   css,
   sql,
+  bash,
+  dotnet,
   nodejs,
+  flask,
   reactjs,
+  expo,
+  nextjs,
   mongodb,
+  postgresql,
+  supabase,
+  redis,
   tailwind,
   bootstrap,
   docker,
   git,
   github,
   linux,
+  stripe,
+  claude,
+  posthog,
 ];

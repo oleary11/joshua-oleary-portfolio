@@ -43,13 +43,13 @@ const ReactionBar = ({ slug }) => {
             whileTap={reacted[key] ? {} : { scale: 0.9 }}
             className={`relative flex items-center gap-2 px-4 py-2.5 rounded-full border transition-all duration-200 text-[14px] font-medium select-none
               ${reacted[key]
-                ? 'bg-[#915EFF]/20 border-[#915EFF] text-white cursor-default'
-                : 'bg-[#1d1836] border-white/10 text-secondary hover:border-[#915EFF] hover:text-white cursor-pointer'
+                ? 'bg-[#5B7A99]/20 border-[#5B7A99] text-white cursor-default'
+                : 'bg-[#1C2430] border-white/10 text-secondary hover:border-[#5B7A99] hover:text-white cursor-pointer'
               }`}
           >
             <span className="text-[18px] leading-none">{emoji}</span>
             <span>{label}</span>
-            <span className={`ml-1 text-[13px] ${reacted[key] ? 'text-[#c4b5fd]' : 'text-secondary'}`}>
+            <span className={`ml-1 text-[13px] ${reacted[key] ? 'text-[#B8C4D0]' : 'text-secondary'}`}>
               {counts[key] ?? 0}
             </span>
             <AnimatePresence>

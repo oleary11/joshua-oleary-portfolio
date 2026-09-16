@@ -13,7 +13,7 @@ const ScrollProgressBar = () => {
       className="fixed top-0 left-0 right-0 h-1 origin-left z-50"
       style={{
         scaleX,
-        background: "linear-gradient(to right, #7c3aed, #576cbc)",
+        background: "linear-gradient(to right, #5B7A99, #4A6D8C)",
       }}
     />
   );

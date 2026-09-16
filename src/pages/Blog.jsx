@@ -23,15 +23,15 @@ const categoryBg = {
 const BlogCard = ({ post, index }) => (
   <motion.div
     variants={fadeIn('up', 'spring', index * 0.15, 0.75)}
-    className="bg-[#151030] rounded-2xl p-6 flex flex-col gap-4 hover:shadow-[0px_20px_60px_-10px_#211e35] transition-shadow duration-500 group"
+    className="bg-[#161B24] rounded-2xl p-6 flex flex-col gap-4 hover:shadow-[0px_20px_60px_-10px_#1A1E26] transition-shadow duration-500 group"
   >
-    <div className={`h-1.5 w-full rounded-full bg-gradient-to-r ${categoryBg[post.category] ?? 'from-[#915EFF] to-[#6b3fc0]'}`} />
+    <div className={`h-1.5 w-full rounded-full bg-gradient-to-r ${categoryBg[post.category] ?? 'from-[#5B7A99] to-[#3D5A73]'}`} />
 
     <div>
       <span className={`text-[12px] font-semibold uppercase tracking-widest ${categoryColors[post.category] ?? 'text-secondary'}`}>
         {post.category}
       </span>
-      <h3 className="text-white font-bold text-[22px] mt-1 leading-snug group-hover:text-[#915EFF] transition-colors duration-300">
+      <h3 className="text-white font-bold text-[22px] mt-1 leading-snug group-hover:text-[#5B7A99] transition-colors duration-300">
         {post.title}
       </h3>
       <p className="text-secondary text-[14px] italic mt-0.5">{post.subtitle}</p>
@@ -41,7 +41,7 @@ const BlogCard = ({ post, index }) => (
 
     <div className="flex flex-wrap gap-2 mt-1">
       {(post.tags ?? []).map((tag) => (
-        <span key={tag} className="px-3 py-1 text-[12px] rounded-full bg-[#915EFF]/20 text-[#c4b5fd]">
+        <span key={tag} className="px-3 py-1 text-[12px] rounded-full bg-[#5B7A99]/20 text-[#B8C4D0]">
           #{tag}
         </span>
       ))}
@@ -51,7 +51,7 @@ const BlogCard = ({ post, index }) => (
       <span className="text-[13px] text-secondary">{post.date} &bull; {post.readTime}</span>
       <Link
         to={`/blog/${post.slug}`}
-        className="flex items-center gap-2 text-[14px] font-medium text-[#915EFF] hover:text-white transition-colors duration-300"
+        className="flex items-center gap-2 text-[14px] font-medium text-[#5B7A99] hover:text-white transition-colors duration-300"
       >
         Read More <FaArrowRight size={12} />
       </Link>
@@ -100,7 +100,7 @@ const Blog = () => {
 
         {loading ? (
           <div className="flex justify-center py-24">
-            <div className="w-8 h-8 rounded-full border-2 border-[#915EFF] border-t-transparent animate-spin" />
+            <div className="w-8 h-8 rounded-full border-2 border-[#5B7A99] border-t-transparent animate-spin" />
           </div>
         ) : (
           <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">

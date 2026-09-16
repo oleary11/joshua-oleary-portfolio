@@ -28,7 +28,7 @@ const renderBlock = (block, i) => {
     <ul key={i} className="list-none mt-4 mb-4 flex flex-col gap-3">
       {block.items.map((item, j) => (
         <li key={j} className="flex gap-3 text-secondary text-[16px] leading-[1.75]">
-          <span className="text-[#915EFF] mt-1.5 shrink-0">&#8226;</span>{item}
+          <span className="text-[#5B7A99] mt-1.5 shrink-0">&#8226;</span>{item}
         </li>
       ))}
     </ul>
@@ -58,7 +58,7 @@ const BlogPost = () => {
 
   if (loading) return (
     <div className="min-h-screen bg-primary flex items-center justify-center">
-      <div className="w-8 h-8 rounded-full border-2 border-[#915EFF] border-t-transparent animate-spin" />
+      <div className="w-8 h-8 rounded-full border-2 border-[#5B7A99] border-t-transparent animate-spin" />
     </div>
   );
   if (notFound) return <Navigate to="/blog" replace />;
@@ -85,7 +85,7 @@ const BlogPost = () => {
         </Link>
 
         {/* Header */}
-        <div className={`h-1 w-16 rounded-full bg-gradient-to-r ${categoryBg[post.category] ?? 'from-[#915EFF] to-[#6b3fc0]'} mb-5`} />
+        <div className={`h-1 w-16 rounded-full bg-gradient-to-r ${categoryBg[post.category] ?? 'from-[#5B7A99] to-[#3D5A73]'} mb-5`} />
 
         <span className={`text-[13px] font-semibold uppercase tracking-widest ${categoryColors[post.category] ?? 'text-secondary'}`}>
           {post.category}
@@ -118,7 +118,7 @@ const BlogPost = () => {
         {/* Tags */}
         <div className="mt-12 flex flex-wrap gap-2">
           {(post.tags ?? []).map((tag) => (
-            <span key={tag} className="px-3 py-1 text-[12px] rounded-full bg-[#915EFF]/20 text-[#c4b5fd]">
+            <span key={tag} className="px-3 py-1 text-[12px] rounded-full bg-[#5B7A99]/20 text-[#B8C4D0]">
               #{tag}
             </span>
           ))}
@@ -133,13 +133,13 @@ const BlogPost = () => {
           {next ? (
             <Link to={`/blog/${next.slug}`} className="flex flex-col gap-1 group max-w-[45%]">
               <span className="text-[12px] text-secondary uppercase tracking-wider">Newer</span>
-              <span className="text-white text-[15px] font-medium group-hover:text-[#915EFF] transition-colors duration-300">{next.title}</span>
+              <span className="text-white text-[15px] font-medium group-hover:text-[#5B7A99] transition-colors duration-300">{next.title}</span>
             </Link>
           ) : <div />}
           {prev ? (
             <Link to={`/blog/${prev.slug}`} className="flex flex-col gap-1 items-end group max-w-[45%] text-right">
               <span className="text-[12px] text-secondary uppercase tracking-wider">Older</span>
-              <span className="text-white text-[15px] font-medium group-hover:text-[#915EFF] transition-colors duration-300">{prev.title}</span>
+              <span className="text-white text-[15px] font-medium group-hover:text-[#5B7A99] transition-colors duration-300">{prev.title}</span>
             </Link>
           ) : <div />}
         </div>

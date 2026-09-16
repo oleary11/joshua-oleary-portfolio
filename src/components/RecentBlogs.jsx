@@ -22,15 +22,15 @@ const categoryBg = {
 const BlogCard = ({ post, index }) => (
   <motion.div
     variants={fadeIn('up', 'spring', index * 0.2, 0.75)}
-    className="bg-tertiary rounded-2xl p-6 sm:w-[360px] w-full flex flex-col gap-4 hover:shadow-[0px_20px_60px_-10px_#211e35] transition-shadow duration-500 group"
+    className="bg-tertiary rounded-2xl p-6 sm:w-[360px] w-full flex flex-col gap-4 hover:shadow-[0px_20px_60px_-10px_#1A1E26] transition-shadow duration-500 group"
   >
-    <div className={`h-1.5 w-full rounded-full bg-gradient-to-r ${categoryBg[post.category] ?? 'from-[#915EFF] to-[#6b3fc0]'}`} />
+    <div className={`h-1.5 w-full rounded-full bg-gradient-to-r ${categoryBg[post.category] ?? 'from-[#5B7A99] to-[#3D5A73]'}`} />
 
     <div>
       <span className={`text-[12px] font-semibold uppercase tracking-widest ${categoryColors[post.category] ?? 'text-secondary'}`}>
         {post.category}
       </span>
-      <h3 className="text-white font-bold text-[20px] mt-1 leading-snug group-hover:text-[#915EFF] transition-colors duration-300">
+      <h3 className="text-white font-bold text-[20px] mt-1 leading-snug group-hover:text-[#5B7A99] transition-colors duration-300">
         {post.title}
       </h3>
       <p className="text-secondary text-[13px] italic mt-0.5">{post.subtitle}</p>
@@ -42,7 +42,7 @@ const BlogCard = ({ post, index }) => (
       <span className="text-[12px] text-secondary">{post.date} &bull; {post.readTime}</span>
       <Link
         to={`/blog/${post.slug}`}
-        className="flex items-center gap-1.5 text-[13px] font-medium text-[#915EFF] hover:text-white transition-colors duration-300"
+        className="flex items-center gap-1.5 text-[13px] font-medium text-[#5B7A99] hover:text-white transition-colors duration-300"
       >
         Read More <FaArrowRight size={11} />
       </Link>
@@ -78,7 +78,7 @@ const RecentBlogs = () => {
 
       {loading ? (
         <div className="mt-10 flex justify-center">
-          <div className="w-7 h-7 rounded-full border-2 border-[#915EFF] border-t-transparent animate-spin" />
+          <div className="w-7 h-7 rounded-full border-2 border-[#5B7A99] border-t-transparent animate-spin" />
         </div>
       ) : (
         <div className="mt-10 flex flex-wrap gap-7">
@@ -94,7 +94,7 @@ const RecentBlogs = () => {
       >
         <Link
           to="/blog"
-          className="flex items-center gap-2 px-6 py-3 rounded-full bg-[#1d1836] border border-white/10 text-secondary hover:text-white hover:border-[#915EFF] transition-all duration-300 text-[15px] font-medium"
+          className="flex items-center gap-2 px-6 py-3 rounded-full bg-[#1C2430] border border-white/10 text-secondary hover:text-white hover:border-[#5B7A99] transition-all duration-300 text-[15px] font-medium"
         >
           View All Posts <FaArrowRight size={13} />
         </Link>

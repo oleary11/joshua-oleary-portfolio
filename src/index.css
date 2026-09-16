@@ -13,6 +13,13 @@
   color-scheme: dark;
 }
 
+@media (pointer: fine) {
+  body.cursor-none-fine,
+  body.cursor-none-fine * {
+    cursor: none !important;
+  }
+}
+
 .hash-span {
   margin-top: -100px;
   padding-bottom: 100px;
@@ -34,11 +41,11 @@
 }
 
 .violet-gradient {
-  background: #804dee;
-  background: linear-gradient(-90deg, #804dee 0%, rgba(60, 51, 80, 0) 100%);
+  background: #4A6D8C;
+  background: linear-gradient(-90deg, #4A6D8C 0%, rgba(60, 51, 80, 0) 100%);
   background: -webkit-linear-gradient(
     -90deg,
-    #804dee 0%,
+    #4A6D8C 0%,
     rgba(60, 51, 80, 0) 100%
   );
 }

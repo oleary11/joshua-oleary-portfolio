@@ -94,7 +94,7 @@ const AdminDashboard = () => {
             { label: 'Total Views', value: totalViews },
             { label: 'Total Reactions', value: totalReactions },
           ].map(({ label, value }) => (
-            <div key={label} className="bg-[#151030] border border-white/10 rounded-2xl p-5">
+            <div key={label} className="bg-[#161B24] border border-white/10 rounded-2xl p-5">
               <p className="text-secondary text-[12px] uppercase tracking-wider mb-1">{label}</p>
               <p className="text-white font-black text-[32px]">{value}</p>
             </div>
@@ -114,14 +114,14 @@ const AdminDashboard = () => {
               <button
                 onClick={handleSeed}
                 disabled={seeding}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#1d1836] border border-white/10 text-secondary hover:text-white hover:border-[#915EFF] text-[13px] transition-all disabled:opacity-50"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#1C2430] border border-white/10 text-secondary hover:text-white hover:border-[#5B7A99] text-[13px] transition-all disabled:opacity-50"
               >
                 <FaDatabase size={12} /> {seeding ? 'Importing…' : 'Import Initial Posts'}
               </button>
             )}
             <Link
               to="/admin/editor"
-              className="flex items-center gap-2 px-4 py-2.5 bg-[#915EFF] hover:bg-[#7c4fe0] rounded-lg text-white text-[14px] font-medium transition-colors"
+              className="flex items-center gap-2 px-4 py-2.5 bg-[#5B7A99] hover:bg-[#4A6580] rounded-lg text-white text-[14px] font-medium transition-colors"
             >
               <FaPlus size={13} /> New Post
             </Link>
@@ -131,7 +131,7 @@ const AdminDashboard = () => {
         {/* Posts table */}
         {loading ? (
           <div className="flex justify-center py-20">
-            <div className="w-8 h-8 rounded-full border-2 border-[#915EFF] border-t-transparent animate-spin" />
+            <div className="w-8 h-8 rounded-full border-2 border-[#5B7A99] border-t-transparent animate-spin" />
           </div>
         ) : posts.length === 0 ? (
           <div className="text-center py-20 text-secondary">
@@ -150,7 +150,7 @@ const AdminDashboard = () => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.05 }}
-                  className="bg-[#151030] border border-white/10 rounded-xl px-5 py-4 flex items-center gap-4 flex-wrap"
+                  className="bg-[#161B24] border border-white/10 rounded-xl px-5 py-4 flex items-center gap-4 flex-wrap"
                 >
                   {/* Status dot */}
                   <div className={`w-2 h-2 rounded-full shrink-0 ${post.is_published ? 'bg-green-400' : 'bg-yellow-400'}`} />
@@ -182,21 +182,21 @@ const AdminDashboard = () => {
                   <div className="flex items-center gap-2 shrink-0">
                     <Link
                       to={`/admin/editor/${post.slug}`}
-                      className="p-2 rounded-lg bg-[#1d1836] text-secondary hover:text-white hover:bg-[#915EFF]/20 transition-colors"
+                      className="p-2 rounded-lg bg-[#1C2430] text-secondary hover:text-white hover:bg-[#5B7A99]/20 transition-colors"
                       title="Edit"
                     >
                       <FaEdit size={14} />
                     </Link>
                     <button
                       onClick={() => handleToggle(post.id, post.is_published)}
-                      className="p-2 rounded-lg bg-[#1d1836] text-secondary hover:text-white hover:bg-[#915EFF]/20 transition-colors"
+                      className="p-2 rounded-lg bg-[#1C2430] text-secondary hover:text-white hover:bg-[#5B7A99]/20 transition-colors"
                       title={post.is_published ? 'Unpublish' : 'Publish'}
                     >
                       {post.is_published ? <FaEyeSlash size={14} /> : <FaEye size={14} />}
                     </button>
                     <button
                       onClick={() => handleDelete(post.id, post.title)}
-                      className="p-2 rounded-lg bg-[#1d1836] text-secondary hover:text-red-400 hover:bg-red-400/10 transition-colors"
+                      className="p-2 rounded-lg bg-[#1C2430] text-secondary hover:text-red-400 hover:bg-red-400/10 transition-colors"
                       title="Delete"
                     >
                       <FaTrash size={14} />

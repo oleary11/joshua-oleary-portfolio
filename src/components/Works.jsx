@@ -1,4 +1,3 @@
-import Tilt from "react-parallax-tilt";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
@@ -7,7 +6,7 @@ import { styles } from "../styles";
 import { github } from "../assets";
 import { SectionWrapper } from "../hoc";
 import { projects } from "../constants";
-import { fadeIn, textVariant } from "../utils/motion";
+import { fadeIn, textVariant, easeOut } from "../utils/motion";
 
 const allTags = ["All", ...new Set(projects.flatMap((p) => p.tags.map((t) => t.name)))];
 
@@ -20,73 +19,75 @@ const ProjectCard = ({
   source_code_link,
   live_link,
 }) => {
+  const primaryLink = live_link || source_code_link;
+
+  const openLink = (e, url) => {
+    e.stopPropagation();
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <motion.div
-      variants={fadeIn("up", "spring", index * 0.3, 0.75)}
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.2, type: "spring", stiffness: 120 }}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6, delay: (index % 3) * 0.1, ease: easeOut }}
+      className="bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full border border-white/5 transition-all duration-500 hover:-translate-y-1.5 hover:border-[#5B7A99]/40 hover:shadow-[0px_20px_60px_-15px_rgba(91,122,153,0.35)]"
     >
-      <Tilt
-        tiltMaxAngleX={10}
-        tiltMaxAngleY={10}
-        perspective={900}
-        scale={1.10}
-        transitionSpeed={1500}
-        glareEnable={true}
-        glareMaxOpacity={0.2}
-        glareColor="#ffffff"
-        glarePosition="all"
-        className="bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full hover:shadow-2xl transition-transform duration-500"
+      <div
+        className={`relative w-full h-[230px] overflow-hidden rounded-2xl group ${primaryLink ? "cursor-pointer" : ""}`}
+        data-cursor={primaryLink ? "View" : undefined}
+        onClick={primaryLink ? (e) => openLink(e, primaryLink) : undefined}
       >
-        <div className="relative w-full h-[230px] overflow-hidden rounded-2xl group">
-          {image ? (
-            <img
-              src={image}
-              alt="project_image"
-              className="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500"
-            />
-          ) : (
-            <div className="w-full h-full bg-[#1d1836] rounded-2xl flex items-center justify-center">
-              <span className="text-secondary text-sm">No preview</span>
+        {image ? (
+          <img
+            src={image}
+            alt="project_image"
+            className="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500 ease-out"
+          />
+        ) : (
+          <div className="w-full h-full bg-[#1C2430] rounded-2xl flex items-center justify-center">
+            <span className="text-secondary text-sm">No preview</span>
+          </div>
+        )}
+
+        <div className="absolute inset-0 flex justify-end gap-2 m-3 card-img_hover">
+          {source_code_link && (
+            <div
+              onClick={(e) => openLink(e, source_code_link)}
+              className="black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer hover:scale-110 transition-all duration-300"
+              title="View source code"
+            >
+              <FaGithub className="text-white w-5 h-5" />
             </div>
           )}
-
-          <div className="absolute inset-0 flex justify-end gap-2 m-3 card-img_hover">
-            {source_code_link && (
-              <div
-                onClick={() => window.open(source_code_link, "_blank")}
-                className="black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer hover:scale-110 transition-all duration-300"
-                title="View source code"
-              >
-                <FaGithub className="text-white w-5 h-5" />
-              </div>
-            )}
-            {live_link && (
-              <div
-                onClick={() => window.open(live_link, "_blank")}
-                className="black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer hover:scale-110 transition-all duration-300"
-                title="View live site"
-              >
-                <FaExternalLinkAlt className="text-white w-4 h-4" />
-              </div>
-            )}
-          </div>
+          {live_link && (
+            <div
+              onClick={(e) => openLink(e, live_link)}
+              className="black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer hover:scale-110 transition-all duration-300"
+              title="View live site"
+            >
+              <FaExternalLinkAlt className="text-white w-4 h-4" />
+            </div>
+          )}
         </div>
+      </div>
 
-        <div className="mt-5">
-          <h3 className="text-white font-bold text-[24px]">{name}</h3>
-          <p className="mt-2 text-secondary text-[14px]">{description}</p>
-        </div>
+      <div className="mt-5">
+        <h3 className="text-white font-bold text-[24px]">{name}</h3>
+        <p className="mt-2 text-secondary text-[14px]">{description}</p>
+      </div>
 
-        <div className="mt-4 flex flex-wrap gap-2">
-          {tags.map((tag) => (
-            <p key={`${name}-${tag.name}`} className={`text-[14px] ${tag.color}`}>
-              #{tag.name}
-            </p>
-          ))}
-        </div>
-      </Tilt>
+      <div className="mt-4 flex flex-wrap gap-2">
+        {tags.map((tag) => (
+          <span
+            key={`${name}-${tag.name}`}
+            className="text-[12px] font-medium px-3 py-1 rounded-full border border-[#5B7A99]/25 bg-[#5B7A99]/10 text-[#B8C4D0]"
+          >
+            {tag.name}
+          </span>
+        ))}
+      </div>
     </motion.div>
   );
 };
@@ -122,8 +123,8 @@ const Works = () => {
             onClick={() => setActiveFilter(tag)}
             className={`px-4 py-2 rounded-full text-[14px] font-medium transition-all duration-200 ${
               activeFilter === tag
-                ? "bg-[#915EFF] text-white"
-                : "bg-[#1d1836] text-secondary hover:text-white border border-white/10"
+                ? "bg-[#5B7A99] text-white"
+                : "bg-[#1C2430] text-secondary hover:text-white border border-white/10"
             }`}
           >
             {tag}
