@@ -32,7 +32,7 @@ const ProjectCard = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.6, delay: (index % 3) * 0.1, ease: easeOut }}
-      className="bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full border border-white/5 transition-all duration-500 hover:-translate-y-1.5 hover:border-[#5B7A99]/40 hover:shadow-[0px_20px_60px_-15px_rgba(91,122,153,0.35)]"
+      className="bg-tertiary p-5 rounded-2xl w-full h-full flex flex-col border border-white/5 transition-all duration-500 hover:-translate-y-1.5 hover:border-[#5B7A99]/40 hover:shadow-[0px_20px_60px_-15px_rgba(91,122,153,0.35)]"
     >
       <div
         className={`relative w-full h-[230px] overflow-hidden rounded-2xl group ${primaryLink ? "cursor-pointer" : ""}`}
@@ -73,7 +73,7 @@ const ProjectCard = ({
         </div>
       </div>
 
-      <div className="mt-5">
+      <div className="mt-5 flex-1">
         <h3 className="text-white font-bold text-[24px]">{name}</h3>
         <p className="mt-2 text-secondary text-[14px]">{description}</p>
       </div>
@@ -132,11 +132,13 @@ const Works = () => {
         ))}
       </div>
 
-      <div className="mt-10 flex flex-wrap gap-7">
+      {/* Grid with uniform rows so every tile is the same size as the tallest one */}
+      <div className="mt-10 grid grid-cols-1 sm:grid-cols-[repeat(auto-fill,360px)] [grid-auto-rows:1fr] gap-7">
         <AnimatePresence mode="popLayout">
           {filtered.map((project, index) => (
             <motion.div
               key={project.name}
+              className="h-full"
               layout
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
