@@ -24,6 +24,7 @@ import {
   platrly,
   idahostumpgrinders,
   pinpassport,
+  tally,
 } from "../assets";
 
 import cSharp from "../assets/tech/cSharp.png";
@@ -168,6 +169,20 @@ const projects = [
     image: pinpassport,
     source_code_link: null,
     live_link: "https://getpinpassport.com",
+  },
+  {
+    name: "Tally",
+    description:
+      "An AI-powered home inventory app, now live on the iOS App Store. Scan a room with your camera and it identifies multiple items from a single photo, estimates replacement values, and reads receipts as proof of value, then exports insurer-ready PDF or CSV reports. I built the React Native app and its Express API: Supabase auth with row-level security, rate-limited vision-AI requests, and RevenueCat in-app purchases.",
+    tags: [
+      { name: "React Native", color: "blue-text-gradient" },
+      { name: "TypeScript", color: "green-text-gradient" },
+      { name: "Supabase", color: "pink-text-gradient" },
+      { name: "Vision AI", color: "orange-text-gradient" },
+    ],
+    image: tally,
+    source_code_link: null,
+    live_link: "https://tallyitnow.com",
   },
   {
     name: "Platrly",

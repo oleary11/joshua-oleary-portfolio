@@ -34,10 +34,12 @@ import desertcandleworks from "./desertcandleworks.png";
 import platrly from "./platrly.png";
 import idahostumpgrinders from "./idahostumpgrinders.png";
 import pinpassport from "./pinpassport.png";
+import tally from "./tally.png";
 
 export {
   resume,
   pinpassport,
+  tally,
   idahostumpgrinders,
   desertcandleworks,
   boulderlogo,
