@@ -319,7 +319,7 @@ export const GitHubApp = () => {
   }, []);
   const years = pub?.created_at ? Math.floor((Date.now() - new Date(pub.created_at)) / 31557600000) : null;
   const stats = [
-    { v: auth?.commitsPastYear, l: "commits this year" },
+    { v: auth?.contributions, l: "contributions in the last year" },
     { v: auth?.totalRepos ?? pub?.public_repos, l: auth?.totalRepos != null ? "repositories" : "public repos" },
     { v: years, l: "years on GitHub" },
   ].filter((s) => s.v != null);

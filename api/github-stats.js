@@ -2,7 +2,8 @@
 // (read from process.env.GITHUB_TOKEN, never a VITE_-prefixed var, so it's
 // never bundled into client code) and exposes two numbers the public REST
 // API can't provide for anyone without authentication: true total repo
-// count (public + private combined) and commits in the past year.
+// count (public + private combined), commits in the past year, and total
+// contributions in the past year (the number shown on the GitHub profile).
 
 const GITHUB_USERNAME = "oleary11";
 
@@ -43,6 +44,9 @@ export default async function handler(req, res) {
           }
           contributionsCollection(from: "${oneYearAgo.toISOString()}", to: "${now.toISOString()}") {
             totalCommitContributions
+            contributionCalendar {
+              totalContributions
+            }
           }
         }
       }`,
@@ -51,8 +55,9 @@ export default async function handler(req, res) {
 
     const totalRepos = data.viewer.repositories.totalCount;
     const commitsPastYear = data.viewer.contributionsCollection.totalCommitContributions;
+    const contributions = data.viewer.contributionsCollection.contributionCalendar.totalContributions;
 
-    return res.status(200).json({ totalRepos, commitsPastYear });
+    return res.status(200).json({ totalRepos, commitsPastYear, contributions });
   } catch (err) {
     console.error("api/github-stats error:", err.message);
     return res.status(200).json({ totalRepos: null, commitsPastYear: null });
