@@ -92,27 +92,49 @@
   transition: filter 1.2s ease;
 }
 
+/* Tumbleweed easter egg: roll across (outer), hop (middle), spin (image), with a ground shadow. */
 @keyframes os-tumble {
-  from {
-    transform: translateX(-160px) rotate(0deg);
-  }
-  to {
-    transform: translateX(calc(100vw + 160px)) rotate(1080deg);
-  }
+  from { transform: translateX(-180px); }
+  to { transform: translateX(calc(100vw + 180px)); }
 }
 
-@keyframes os-bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-40px); }
+@keyframes os-hop {
+  0%, 100% { transform: translateY(0); animation-timing-function: cubic-bezier(0.33, 0, 0.67, 0); }
+  50% { transform: translateY(-56px); animation-timing-function: cubic-bezier(0.33, 1, 0.67, 1); }
+}
+
+@keyframes os-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes os-shadow {
+  0%, 100% { transform: scaleX(1); opacity: 0.45; }
+  50% { transform: scaleX(0.6); opacity: 0.18; }
 }
 
 .os-tumbleweed {
-  animation: os-tumble 5s linear forwards;
+  animation: os-tumble 6s linear forwards;
 }
 
-.os-tumbleweed > span {
+.os-tumble-hop {
   display: block;
-  animation: os-bounce 0.6s ease-in-out infinite;
+  animation: os-hop 0.75s infinite;
+}
+
+.os-tumble-spin {
+  animation: os-spin 1.1s linear infinite;
+  filter: drop-shadow(0 2px 3px rgb(20 8 2 / 0.35));
+}
+
+.os-tumble-shadow {
+  display: block;
+  margin: -6px auto 0;
+  width: 90px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgb(20 8 2 / 0.6);
+  filter: blur(4px);
+  animation: os-shadow 0.75s ease-in-out infinite;
 }
 
 @keyframes os-twinkle {
@@ -122,7 +144,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   .os-tumbleweed,
-  .os-tumbleweed > span {
+  .os-tumble-hop,
+  .os-tumble-spin,
+  .os-tumble-shadow {
     animation: none;
   }
 }

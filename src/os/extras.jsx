@@ -39,15 +39,10 @@ export const Toast = ({ msg }) => (
 
 export const Tumbleweed = () => (
   <div className="os-tumbleweed pointer-events-none fixed bottom-24 left-0 z-[9998]" aria-hidden="true">
-    <span>
-      <svg width="110" height="110" viewBox="0 0 100 100">
-        <g fill="none" stroke="#c9a06b" strokeWidth="3" strokeLinecap="round">
-          <circle cx="50" cy="50" r="40" strokeDasharray="14 10" />
-          <circle cx="50" cy="50" r="28" strokeDasharray="10 8" />
-          <path d="M18 40 Q50 10 82 44 M20 62 Q50 92 80 58 M34 16 Q60 50 30 86 M66 16 Q40 50 70 86" />
-        </g>
-      </svg>
+    <span className="os-tumble-hop">
+      <img src="/os/tumbleweed.webp" alt="" width="120" height="118" className="os-tumble-spin block" />
     </span>
+    <span className="os-tumble-shadow" />
   </div>
 );
 
