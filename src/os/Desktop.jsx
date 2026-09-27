@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import myimg from "../assets/myimg.png";
 import { resume } from "../assets";
+import { celebrate } from "../utils/confetti";
 import { bio } from "./data";
 import { APPS, byId, RESUME_ICON } from "./registry";
 import Window from "./Window";
@@ -21,13 +22,16 @@ function useFrames() {
   return useMemo(() => {
     const { w: W, h: H } = vp;
     const left = Math.round(W * 0.34);
-    const termW = Math.min(480, Math.round(W * 0.31));
-    const bottomY = Math.round(H * 0.6);
-    const bottomH = Math.min(250, H - bottomY - 112);
+    const rowX = left - 40;
+    const gap = 18;
+    const col = Math.min(460, Math.floor((W - rowX - 28 - gap * 2) / 3));
+    const bottomY = Math.round(H * 0.5);
+    const bottomH = Math.min(340, H - bottomY - 112);
     const frames = {
       platrly: { x: left, y: 28, w: Math.min(900, W - left - 28), h: Math.min(540, bottomY - 44) },
-      terminal: { x: left - 40, y: bottomY, w: termW, h: bottomH },
-      github: { x: left - 40 + termW + 18, y: bottomY, w: Math.min(520, W - (left - 40 + termW + 18) - 28), h: bottomH },
+      terminal: { x: rowX, y: bottomY, w: col, h: bottomH },
+      github: { x: rowX + col + gap, y: bottomY, w: col, h: bottomH },
+      contact: { x: rowX + (col + gap) * 2, y: bottomY, w: col, h: bottomH },
     };
     let cascade = 0;
     return (id) => {
@@ -52,7 +56,7 @@ const DesktopIcon = ({ app, onOpen, href }) => {
   );
   const cls = "group flex w-[92px] flex-col items-center rounded-xl p-1.5 hover:bg-white/10";
   return href ? (
-    <a href={href} download="Joshua_OLeary_Resume.pdf" className={cls}>
+    <a href={href} download="Joshua_OLeary_Resume.pdf" onClick={(e) => celebrate(e.currentTarget)} className={cls}>
       {inner}
     </a>
   ) : (
@@ -63,25 +67,28 @@ const DesktopIcon = ({ app, onOpen, href }) => {
 };
 
 const Desktop = () => {
-  const os = useOS(["platrly", "terminal", "github"]);
+  const os = useOS(["platrly", "terminal", "github", "contact"]);
   const frameFor = useFrames();
   const [frames, setFrames] = useState({});
   const areaRef = useRef(null);
 
   const frameOf = (id) => frames[id] ?? null;
+  const topId = Object.entries(os.wins)
+    .filter(([, w]) => w.open && !w.min)
+    .sort((a, b) => b[1].z - a[1].z)[0]?.[0];
   const open = (id) => {
     if (!frames[id]) setFrames((f) => ({ ...f, [id]: frameFor(id) }));
     os.openApp(id);
   };
 
   useEffect(() => {
-    setFrames({ platrly: frameFor("platrly"), terminal: frameFor("terminal"), github: frameFor("github") });
+    setFrames({ platrly: frameFor("platrly"), terminal: frameFor("terminal"), github: frameFor("github"), contact: frameFor("contact") });
   }, [frameFor]);
 
   const ctx = (id) => ({ openApp: open, closeSelf: () => os.closeApp(id), toggleNight: os.toggleNight, tumbleweed: os.tumbleweed });
 
   return (
-    <div className={`os fixed inset-0 overflow-hidden bg-[#2a1810] ${os.night ? "os-night" : ""}`}>
+    <div data-lenis-prevent className={`os fixed inset-0 overflow-hidden bg-[#2a1810] ${os.night ? "os-night" : ""}`}>
       <img src="/os/wallpaper-desktop.jpg" alt="" className="os-wallpaper absolute inset-0 h-full w-full object-cover" />
       <div className="absolute inset-0 bg-[radial-gradient(60%_60%_at_20%_20%,rgb(40_18_8/0.35),transparent_70%)]" aria-hidden="true" />
       {os.night && <Stars />}
@@ -113,8 +120,8 @@ const Desktop = () => {
         </nav>
         </div>
 
-        {/* Trash, bottom right */}
-        <div className="absolute right-5 bottom-3">
+        {/* Trash, bottom right, level with the dock so windows never cover it */}
+        <div className="absolute right-5 -bottom-[88px] z-[1]">
           <DesktopIcon app={byId.trash} onOpen={() => open("trash")} />
         </div>
 
@@ -125,6 +132,7 @@ const Desktop = () => {
               key={a.id}
               app={{ ...a, frame: frameOf(a.id) }}
               state={os.wins[a.id]}
+              active={a.id === topId}
               constraintsRef={areaRef}
               onFocus={() => os.focus(a.id)}
               onClose={() => os.closeApp(a.id)}

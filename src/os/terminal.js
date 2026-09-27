@@ -56,6 +56,7 @@ export function runCommand(raw, ctx) {
       return [technologies.map((t) => t.name).join(", ")];
     case "resume":
       downloadResume();
+      celebrate(ctx.el);
       return ["Downloading Joshua_OLeary_Resume.pdf..."];
     case "contact":
       ctx.openApp("contact");

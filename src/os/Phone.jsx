@@ -2,6 +2,7 @@ import { AnimatePresence, motion, useDragControls } from "framer-motion";
 import { FiChevronLeft } from "react-icons/fi";
 import myimg from "../assets/myimg.png";
 import { resume } from "../assets";
+import { celebrate } from "../utils/confetti";
 import { bio } from "./data";
 import { byId, RESUME_ICON } from "./registry";
 import { useOS } from "./useOS";
@@ -21,7 +22,7 @@ const AppIcon = ({ app, onOpen, href }) => {
   );
   const cls = "flex flex-col items-center";
   return href ? (
-    <a href={href} download="Joshua_OLeary_Resume.pdf" className={cls}>
+    <a href={href} download="Joshua_OLeary_Resume.pdf" onClick={(e) => celebrate(e.currentTarget)} className={cls}>
       {inner}
     </a>
   ) : (
@@ -41,7 +42,7 @@ const Phone = () => {
   const ctx = (id) => ({ openApp: os.openApp, closeSelf: () => os.closeApp(id), toggleNight: os.toggleNight, tumbleweed: os.tumbleweed });
 
   return (
-    <div className={`os fixed inset-0 overflow-hidden bg-[#2a1810] ${os.night ? "os-night" : ""}`}>
+    <div data-lenis-prevent className={`os fixed inset-0 overflow-hidden bg-[#2a1810] ${os.night ? "os-night" : ""}`}>
       <img src="/os/wallpaper-mobile.jpg" alt="" className="os-wallpaper absolute inset-0 h-full w-full object-cover" />
       <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-black/30" aria-hidden="true" />
       {os.night && <Stars />}

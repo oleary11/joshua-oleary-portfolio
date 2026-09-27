@@ -25,6 +25,7 @@ const Button = ({ href, children, download, onClick, primary = true }) => {
       <a
         href={href}
         download={download}
+        onClick={download ? (e) => celebrate(e.currentTarget) : onClick}
         target={download || href.startsWith("mailto") ? undefined : "_blank"}
         rel="noopener noreferrer"
         className={`${cls} inline-flex min-h-11 items-center rounded-full px-5 text-[14px] font-bold transition-colors`}
@@ -349,7 +350,7 @@ export const BlogApp = () => {
       <ul className="space-y-2">
         {(posts ?? []).slice(0, 6).map((p) => (
           <li key={p.slug}>
-            <Link to={`/blog/${p.slug}`} className="block rounded-xl bg-white/5 p-4 transition-colors hover:bg-white/10">
+            <Link to={`/blog/${p.slug}`} target="_blank" rel="noopener noreferrer" className="block rounded-xl bg-white/5 p-4 transition-colors hover:bg-white/10">
               <p className="os-mono text-[11px] tracking-wide text-[#ffb892] uppercase">{p.category}</p>
               <p className="mt-1 font-bold">{p.title}</p>
               <p className="mt-1 text-[12px] text-[var(--os-faint)]">
@@ -360,7 +361,7 @@ export const BlogApp = () => {
         ))}
         {posts === null && <li className="text-[var(--os-faint)]">Loading posts…</li>}
       </ul>
-      <Link to="/blog" className="mt-4 inline-flex min-h-11 items-center gap-1 text-[14px] font-semibold text-[#ffb892] hover:text-white">
+      <Link to="/blog" target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex min-h-11 items-center gap-1 text-[14px] font-semibold text-[#ffb892] hover:text-white">
         All posts <FiArrowUpRight />
       </Link>
     </div>
@@ -391,21 +392,30 @@ export const ContactApp = () => {
       setErr(x.message || "Something went wrong. Please email me directly instead.");
     }
   };
-  const field = "w-full rounded-xl border border-[var(--os-line)] bg-black/20 px-4 py-3 text-[16px] text-[var(--os-text)] placeholder:text-[var(--os-faint)] focus:border-[var(--os-accent)] focus:outline-none";
+  const field = "w-full rounded-xl border border-[var(--os-line)] bg-black/20 px-3.5 py-2.5 text-[16px] text-[var(--os-text)] placeholder:text-[var(--os-faint)] focus:border-[var(--os-accent)] focus:outline-none";
   return (
-    <form onSubmit={submit} className="space-y-3 p-5">
-      <p className="text-[15px] text-[var(--os-muted)]">Hiring, a project, or just saying hi. I reply fast.</p>
-      <label className="block">
-        <span className="mb-1 block text-[13px] font-semibold">Name</span>
-        <input name="name" value={form.name} onChange={set} required autoComplete="name" className={field} />
-      </label>
-      <label className="block">
-        <span className="mb-1 block text-[13px] font-semibold">Email</span>
-        <input name="email" type="email" value={form.email} onChange={set} required autoComplete="email" spellCheck={false} className={field} />
-      </label>
+    <form onSubmit={submit} className="space-y-3 p-4">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <label className="block">
+          <span className="mb-1 block text-[13px] font-semibold">Name</span>
+          <input name="name" value={form.name} onChange={set} required autoComplete="name" className={field} />
+        </label>
+        <label className="block">
+          <span className="mb-1 block text-[13px] font-semibold">Email</span>
+          <input name="email" type="email" value={form.email} onChange={set} required autoComplete="email" spellCheck={false} className={field} />
+        </label>
+      </div>
       <label className="block">
         <span className="mb-1 block text-[13px] font-semibold">Message</span>
-        <textarea name="message" value={form.message} onChange={set} required rows={4} className={field} />
+        <textarea
+          name="message"
+          value={form.message}
+          onChange={set}
+          required
+          rows={3}
+          placeholder="Hiring, a project, or just saying hi…"
+          className={`${field} resize-none`}
+        />
       </label>
       <input name="company" value={form.company} onChange={set} tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
       <div className="flex flex-wrap items-center gap-3">
@@ -417,8 +427,8 @@ export const ContactApp = () => {
         >
           {status === "sending" ? "Sending…" : "Send message"}
         </button>
-        <a href={`mailto:${EMAIL}`} className="inline-flex min-h-11 items-center gap-2 text-[14px] text-[var(--os-muted)] hover:text-white">
-          <FiMail /> {EMAIL}
+        <a href={`mailto:${EMAIL}`} className="inline-flex min-h-11 min-w-0 items-center gap-2 truncate text-[13px] text-[var(--os-muted)] hover:text-white">
+          <FiMail className="shrink-0" /> {EMAIL}
         </a>
       </div>
       <p aria-live="polite" className="text-[14px]">

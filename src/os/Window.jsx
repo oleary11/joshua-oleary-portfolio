@@ -1,7 +1,7 @@
 import { motion, useDragControls } from "framer-motion";
 
 // A draggable glass window. Drag by the title bar; click anywhere to focus.
-const Window = ({ app, state, constraintsRef, onFocus, onClose, onMinimize, children }) => {
+const Window = ({ app, state, active, constraintsRef, onFocus, onClose, onMinimize, children }) => {
   const controls = useDragControls();
   const { x, y, w, h } = app.frame;
 
@@ -21,7 +21,7 @@ const Window = ({ app, state, constraintsRef, onFocus, onClose, onMinimize, chil
       exit={{ opacity: 0, scale: 0.96 }}
       transition={{ type: "spring", stiffness: 380, damping: 32 }}
       style={{ left: x, top: y, width: w, height: h, zIndex: state.z, pointerEvents: state.min ? "none" : "auto" }}
-      className="os-glass absolute flex flex-col overflow-hidden rounded-2xl"
+      className={`os-window absolute flex flex-col overflow-hidden rounded-2xl ${active ? "is-active" : ""}`}
       onKeyDown={(e) => e.key === "Escape" && onClose()}
     >
       <header
@@ -45,7 +45,7 @@ const Window = ({ app, state, constraintsRef, onFocus, onClose, onMinimize, chil
           />
           <span className="h-3.5 w-3.5 rounded-full bg-[#28c840] ring-1 ring-black/20" aria-hidden="true" />
         </div>
-        <p className="flex items-center gap-2 text-[14px] font-semibold select-none">{app.title}</p>
+        <p className={`flex items-center gap-2 text-[14px] font-semibold select-none transition-opacity ${active ? "" : "opacity-55"}`}>{app.title}</p>
       </header>
       <div className="os-scroll min-h-0 flex-1 overflow-y-auto">{children}</div>
     </motion.section>

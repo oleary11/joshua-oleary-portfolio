@@ -18,7 +18,7 @@ export const Clock = ({ onSecret, className = "" }) => {
     }
   };
   return (
-    <button type="button" onClick={onClick} className={`os-mono tabular-nums ${className}`} aria-label="Clock">
+    <button type="button" onClick={onClick} className={`os-mono whitespace-nowrap tabular-nums ${className}`} aria-label="Clock">
       {now.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })}
     </button>
   );
