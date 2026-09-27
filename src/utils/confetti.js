@@ -1,6 +1,6 @@
 import confetti from "canvas-confetti";
 
-const BRAND_COLORS = ["#5B7A99", "#4A6D8C", "#7E93A8", "#B8C4D0"];
+const BRAND_COLORS = ["#D9622B", "#F2A65A", "#FFD7BF", "#FFF4E8"];
 
 export function celebrate(originEl) {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;

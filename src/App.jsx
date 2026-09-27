@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { ReactLenis } from 'lenis/react';
 
 import { BackToTop, ScrollProgressBar, CustomCursor } from './components';
@@ -7,12 +7,27 @@ import GrainOverlay from './components/GrainOverlay';
 import ScrollToTop from './components/ScrollToTop';
 import ProtectedRoute from './components/ProtectedRoute';
 
-import PortfolioHome  from './pages/PortfolioHome';
+import OSHome         from './os/OSHome';
 import Blog           from './pages/Blog';
 import BlogPost       from './pages/BlogPost';
 import Admin          from './pages/Admin';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminEditor    from './pages/AdminEditor';
+
+// The old site-wide scroll effects only make sense on the scrolling blog pages,
+// not on the desktop-style home page.
+function SiteChrome() {
+  const { pathname } = useLocation();
+  if (pathname === '/') return null;
+  return (
+    <>
+      <ScrollProgressBar />
+      <BackToTop />
+      <GrainOverlay />
+      <CustomCursor />
+    </>
+  );
+}
 
 function App() {
   const [reduceMotion] = useState(
@@ -23,13 +38,10 @@ function App() {
   const routes = (
     <>
       <ScrollToTop />
-      <ScrollProgressBar />
-      <BackToTop />
-      <GrainOverlay />
-      <CustomCursor />
+      <SiteChrome />
       <Routes>
         {/* Public */}
-        <Route path="/"            element={<PortfolioHome />} />
+        <Route path="/"            element={<OSHome />} />
         <Route path="/blog"        element={<Blog />} />
         <Route path="/blog/:slug"  element={<BlogPost />} />
 

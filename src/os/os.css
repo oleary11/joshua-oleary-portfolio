@@ -1,0 +1,107 @@
+/* Warm-glass desktop theme for the OS portfolio. */
+.os {
+  --os-accent: #d9622b;
+  --os-accent-soft: rgb(217 98 43 / 0.18);
+  --os-text: #fff4e8;
+  --os-muted: rgb(255 238 220 / 0.72);
+  --os-faint: rgb(255 238 220 / 0.5);
+  --os-line: rgb(255 226 196 / 0.16);
+  --os-glass: rgb(64 38 24 / 0.52);
+  --os-glass-strong: rgb(46 27 17 / 0.72);
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  color: var(--os-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.os ::selection {
+  background: var(--os-accent);
+  color: #fff;
+}
+
+/* The legacy stylesheet sets Poppins on every element with "*", so override it here. */
+.os,
+.os * {
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  word-spacing: 0.08em;
+}
+
+.os .os-mono,
+.os .os-mono * {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  word-spacing: 0;
+}
+
+.os-glass {
+  background: var(--os-glass);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  backdrop-filter: blur(22px) saturate(140%);
+  border: 1px solid rgb(255 226 196 / 0.18);
+  box-shadow:
+    inset 0 1px 0 rgb(255 240 225 / 0.12),
+    0 30px 60px -20px rgb(20 8 2 / 0.6);
+}
+
+.os-glass-strong {
+  background: var(--os-glass-strong);
+  -webkit-backdrop-filter: blur(26px) saturate(150%);
+  backdrop-filter: blur(26px) saturate(150%);
+  border: 1px solid rgb(255 226 196 / 0.16);
+}
+
+.os-focus:focus-visible,
+.os button:focus-visible,
+.os a:focus-visible {
+  outline: 2px solid var(--os-accent);
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+
+.os-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(255 226 196 / 0.25) transparent;
+}
+
+/* Night mode easter egg */
+.os-night .os-wallpaper {
+  filter: brightness(0.35) saturate(0.7) hue-rotate(-15deg);
+  transition: filter 1.2s ease;
+}
+
+.os-wallpaper {
+  transition: filter 1.2s ease;
+}
+
+@keyframes os-tumble {
+  from {
+    transform: translateX(-160px) rotate(0deg);
+  }
+  to {
+    transform: translateX(calc(100vw + 160px)) rotate(1080deg);
+  }
+}
+
+@keyframes os-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-40px); }
+}
+
+.os-tumbleweed {
+  animation: os-tumble 5s linear forwards;
+}
+
+.os-tumbleweed > span {
+  display: block;
+  animation: os-bounce 0.6s ease-in-out infinite;
+}
+
+@keyframes os-twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .os-tumbleweed,
+  .os-tumbleweed > span {
+    animation: none;
+  }
+}
