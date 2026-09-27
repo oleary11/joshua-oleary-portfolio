@@ -3,6 +3,7 @@
 export const GITHUB_USERNAME = "oleary11";
 export const EMAIL = "contact@olearyhouse.com";
 export const LINKEDIN = "https://www.linkedin.com/in/joshua-oleary/";
+export const REPO_URL = "https://github.com/oleary11/joshua-oleary-portfolio";
 
 export const bio = {
   greeting: "Hey, I'm Josh.",

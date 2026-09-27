@@ -126,3 +126,8 @@
     animation: none;
   }
 }
+
+/* Context menu items show focus with their fill, not the global outline */
+.os [role="menuitem"]:focus-visible {
+  outline: none;
+}

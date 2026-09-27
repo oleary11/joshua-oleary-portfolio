@@ -3,7 +3,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import myimg from "../assets/myimg.png";
 import { resume } from "../assets";
 import { celebrate } from "../utils/confetti";
-import { bio } from "./data";
+import { downloadResume } from "../utils/downloadResume";
+import ContextMenu, { useContextMenu, desktopMenuItems } from "./ContextMenu";
+import { bio, EMAIL, REPO_URL } from "./data";
 import { APPS, byId, RESUME_ICON } from "./registry";
 import Window from "./Window";
 import { useOS } from "./useOS";
@@ -85,10 +87,24 @@ const Desktop = () => {
     setFrames({ platrly: frameFor("platrly"), terminal: frameFor("terminal"), github: frameFor("github"), contact: frameFor("contact") });
   }, [frameFor]);
 
+  // Reset layout: back to the default windows, and remount them so dragged positions snap back.
+  const [layout, setLayout] = useState(0);
+  const resetLayout = () => {
+    os.reset();
+    setFrames({ platrly: frameFor("platrly"), terminal: frameFor("terminal"), github: frameFor("github"), contact: frameFor("contact") });
+    setLayout((n) => n + 1);
+  };
+  const cm = useContextMenu();
+  const hire = () => {
+    open("contact");
+    celebrate(null);
+    os.say("Great choice. The contact form is right there.");
+  };
+
   const ctx = (id) => ({ openApp: open, closeSelf: () => os.closeApp(id), toggleNight: os.toggleNight, tumbleweed: os.tumbleweed });
 
   return (
-    <div data-lenis-prevent className={`os fixed inset-0 overflow-hidden bg-[#2a1810] ${os.night ? "os-night" : ""}`}>
+    <div data-lenis-prevent onContextMenu={cm.onContextMenu} className={`os fixed inset-0 overflow-hidden bg-[#2a1810] ${os.night ? "os-night" : ""}`}>
       <Wallpaper day="/os/wallpaper-desktop.jpg" nightSrc="/os/wallpaper-desktop-night.jpg" night={os.night} />
       <div className={`pointer-events-none absolute inset-0 transition-colors duration-1000 ${os.night ? "bg-transparent" : "bg-white/[0.06]"}`} aria-hidden="true" />
       <div className="absolute inset-0 bg-[radial-gradient(60%_60%_at_20%_20%,rgb(40_18_8/0.35),transparent_70%)]" aria-hidden="true" />
@@ -130,7 +146,7 @@ const Desktop = () => {
         <AnimatePresence>
           {APPS.filter((a) => os.wins[a.id]?.open && frameOf(a.id)).map((a) => (
             <Window
-              key={a.id}
+              key={`${a.id}-${layout}`}
               app={{ ...a, frame: frameOf(a.id) }}
               state={os.wins[a.id]}
               active={a.id === topId}
@@ -165,6 +181,14 @@ const Desktop = () => {
         <Clock onSecret={os.toggleNight} className="self-center pr-2 text-[15px] font-semibold" />
       </nav>
 
+      {cm.menu && (
+        <ContextMenu
+          x={cm.menu.x}
+          y={cm.menu.y}
+          onClose={cm.close}
+          items={desktopMenuItems({ os, open, resetLayout, downloadResume: () => { downloadResume(); celebrate(null); }, hire, email: EMAIL, repo: REPO_URL })}
+        />
+      )}
       <AnimatePresence>{os.toast && <Toast key={os.toast} msg={os.toast} />}</AnimatePresence>
       {os.tumble > 0 && <Tumbleweed key={os.tumble} />}
       <motion.p aria-hidden="true" className="os-mono pointer-events-none absolute bottom-6 left-7 text-[11px] tracking-[0.25em] text-white/60 uppercase">

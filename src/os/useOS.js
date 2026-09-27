@@ -56,6 +56,13 @@ export function useOS(initial = []) {
     setWins((w) => (w[id]?.z === zTop.current - 1 ? w : { ...w, [id]: { ...w[id], z: zTop.current } }));
   }, []);
 
+  const closeAll = useCallback(() => setWins((w) => Object.fromEntries(Object.entries(w).map(([k, v]) => [k, { ...v, open: false }]))), []);
+  const reset = useCallback(() => {
+    zTop.current = 10 + initial.length;
+    setWins(Object.fromEntries(initial.map((id, i) => [id, { open: true, min: false, z: 10 + i }])));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const toggleNight = useCallback(() => setNight((n) => !n), []);
   const tumbleweed = useCallback(() => setTumble((t) => t + 1), []);
 
@@ -75,5 +82,5 @@ export function useOS(initial = []) {
     return () => window.removeEventListener("keydown", onKey);
   }, [say]);
 
-  return { wins, openApp, closeApp, minimize, focus, night, toggleNight, tumble, tumbleweed, toast, say, cactusUnlocked };
+  return { wins, openApp, closeApp, closeAll, reset, minimize, focus, night, toggleNight, tumble, tumbleweed, toast, say, cactusUnlocked };
 }
