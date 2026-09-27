@@ -25,6 +25,7 @@ import {
   idahostumpgrinders,
   pinpassport,
   tally,
+  olearysoftware,
 } from "../assets";
 
 import cSharp from "../assets/tech/cSharp.png";
@@ -156,6 +157,20 @@ const experiences = [
 ];
 
 const projects = [
+  {
+    name: "OLeary Software",
+    description:
+      "The website for my software consultancy, which helps small businesses find what's costing them time and money and fixes it with automation, custom software, websites and IT. Built in Next.js with a custom brand and logo, real client work, a contact form that emails leads through Resend, and structured data for local SEO.",
+    tags: [
+      { name: "Next.js", color: "blue-text-gradient" },
+      { name: "TypeScript", color: "green-text-gradient" },
+      { name: "Tailwind", color: "pink-text-gradient" },
+      { name: "Resend", color: "orange-text-gradient" },
+    ],
+    image: olearysoftware,
+    source_code_link: null,
+    live_link: "https://www.olearysoftware.com",
+  },
   {
     name: "Pin Passport",
     description:

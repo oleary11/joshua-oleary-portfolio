@@ -34,11 +34,13 @@ import desertcandleworks from "./desertcandleworks.png";
 import platrly from "./platrly.png";
 import idahostumpgrinders from "./idahostumpgrinders.png";
 import pinpassport from "./pinpassport.png";
+import olearysoftware from "./olearysoftware.png";
 import tally from "./tally.png";
 
 export {
   resume,
   pinpassport,
+  olearysoftware,
   tally,
   idahostumpgrinders,
   desertcandleworks,
