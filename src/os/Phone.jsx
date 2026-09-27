@@ -44,6 +44,7 @@ const Phone = () => {
   return (
     <div data-lenis-prevent className={`os fixed inset-0 overflow-hidden bg-[#2a1810] ${os.night ? "os-night" : ""}`}>
       <img src="/os/wallpaper-mobile.jpg" alt="" className="os-wallpaper absolute inset-0 h-full w-full object-cover" />
+      <div className="pointer-events-none absolute inset-0 bg-white/[0.06]" aria-hidden="true" />
       <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-black/30" aria-hidden="true" />
       {os.night && <Stars />}
 

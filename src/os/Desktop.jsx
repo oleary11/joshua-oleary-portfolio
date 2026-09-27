@@ -90,6 +90,7 @@ const Desktop = () => {
   return (
     <div data-lenis-prevent className={`os fixed inset-0 overflow-hidden bg-[#2a1810] ${os.night ? "os-night" : ""}`}>
       <img src="/os/wallpaper-desktop.jpg" alt="" className="os-wallpaper absolute inset-0 h-full w-full object-cover" />
+      <div className="pointer-events-none absolute inset-0 bg-white/[0.06]" aria-hidden="true" />
       <div className="absolute inset-0 bg-[radial-gradient(60%_60%_at_20%_20%,rgb(40_18_8/0.35),transparent_70%)]" aria-hidden="true" />
       {os.night && <Stars />}
 

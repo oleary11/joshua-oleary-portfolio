@@ -182,24 +182,43 @@ export const AboutApp = () => (
 
 /* ---------- All projects folder ---------- */
 
+// Fresh images for the non-featured projects (the old constants images are outdated).
+const EXTRA_IMAGES = { "Idaho Stump Grinders": "/os/projects/idaho.webp" };
+
+const folderItems = () => {
+  const extras = allProjects.filter(
+    (p) => !featured.some((f) => f.name === p.name || (f.id === "dcw" && p.name === "Desert Candle Works"))
+  );
+  return [
+    ...featured.map((f) => ({ key: f.id, name: f.name, blurb: f.tagline, image: f.image, tint: f.tint, contain: f.id === "tally" || f.id === "platrly", id: f.id })),
+    ...extras.map((p) => ({ key: p.name, name: p.name, blurb: p.description, image: EXTRA_IMAGES[p.name] ?? p.image, href: p.live_link || p.source_code_link })),
+  ];
+};
+
 export const ProjectsFolderApp = ({ openApp }) => (
   <div className="grid gap-3 p-5 sm:grid-cols-2">
-    {allProjects.map((p) => {
-      const feat = featured.find((f) => f.name === p.name || (f.id === "dcw" && p.name === "Desert Candle Works"));
-      const href = p.live_link || p.source_code_link;
+    {folderItems().map((p) => {
       const body = (
         <>
-          <img src={p.image} alt="" loading="lazy" className="h-28 w-full rounded-lg object-cover object-top" />
-          <p className="mt-2 font-bold">{p.name}</p>
-          <p className="line-clamp-2 text-[13px] text-[var(--os-faint)]">{p.description}</p>
+          <span className="block aspect-[16/10] overflow-hidden rounded-lg" style={{ background: p.tint ?? "#1b120c" }}>
+            <img
+              src={p.image}
+              alt=""
+              loading="lazy"
+              className={`h-full w-full ${p.contain ? "object-contain p-3" : "object-cover object-top"} ${p.id === "tally" ? "p-6" : ""}`}
+            />
+          </span>
+          <span className="mt-2 block font-bold">{p.name}</span>
+          <span className="line-clamp-2 text-[13px] text-[var(--os-faint)]">{p.blurb}</span>
         </>
       );
-      return feat ? (
-        <button key={p.name} type="button" onClick={() => openApp(feat.id)} className="rounded-xl bg-white/5 p-3 text-left transition-colors hover:bg-white/10">
+      const cls = "rounded-xl bg-white/5 p-3 text-left transition-colors hover:bg-white/10";
+      return p.id ? (
+        <button key={p.key} type="button" onClick={() => openApp(p.id)} className={cls}>
           {body}
         </button>
       ) : (
-        <a key={p.name} href={href} target="_blank" rel="noopener noreferrer" className="rounded-xl bg-white/5 p-3 transition-colors hover:bg-white/10">
+        <a key={p.key} href={p.href} target="_blank" rel="noopener noreferrer" className={cls}>
           {body}
         </a>
       );
