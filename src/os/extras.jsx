@@ -60,15 +60,27 @@ export const NightToggle = ({ night, onToggle, className = "" }) => (
 );
 
 // Day photo underneath; the night photo fades in on top (only loaded once night is used).
-export const Wallpaper = ({ day, nightSrc, night }) => {
+// "/os/x-{w}.jpg" -> srcSet across the widths we export, so high-DPI screens get real pixels.
+const setOf = (tpl, widths) => (widths ? widths.map((w) => `${tpl.replace("{w}", w)} ${w}w`).join(", ") : undefined);
+
+export const Wallpaper = ({ day, nightSrc, night, widths }) => {
   const used = useRef(night);
   if (night) used.current = true;
   return (
     <>
-      <img src={day} alt="" className="absolute inset-0 h-full w-full object-cover" />
+      <img
+        src={day.replace("{w}", widths?.[1] ?? "")}
+        srcSet={setOf(day, widths)}
+        sizes="100vw"
+        alt=""
+        fetchPriority="high"
+        className="absolute inset-0 h-full w-full object-cover"
+      />
       {used.current && (
         <img
-          src={nightSrc}
+          src={nightSrc.replace("{w}", widths?.[1] ?? "")}
+          srcSet={setOf(nightSrc, widths)}
+          sizes="100vw"
           alt=""
           className={`os-night-photo absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${night ? "opacity-100" : "opacity-0"}`}
         />
