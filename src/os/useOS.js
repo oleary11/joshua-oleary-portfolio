@@ -9,7 +9,20 @@ export function useOS(initial = []) {
     Object.fromEntries(initial.map((id, i) => [id, { open: true, min: false, z: 10 + i }]))
   );
   const zTop = useRef(10 + initial.length);
-  const [night, setNight] = useState(false);
+  const [night, setNight] = useState(() => {
+    try {
+      return localStorage.getItem("josh-os-night") === "1";
+    } catch {
+      return false;
+    }
+  });
+  useEffect(() => {
+    try {
+      localStorage.setItem("josh-os-night", night ? "1" : "0");
+    } catch {
+      /* storage blocked: the toggle still works for this visit */
+    }
+  }, [night]);
   const [tumble, setTumble] = useState(0);
   const [toast, setToast] = useState(null);
   const seen = useRef(new Set(initial));

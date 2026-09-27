@@ -7,7 +7,7 @@ import { bio } from "./data";
 import { APPS, byId, RESUME_ICON } from "./registry";
 import Window from "./Window";
 import { useOS } from "./useOS";
-import { Tumbleweed, Stars, Toast, Clock, CactusIcon } from "./extras";
+import { Tumbleweed, Stars, Toast, Clock, CactusIcon, NightToggle, Wallpaper } from "./extras";
 
 const DESKTOP_ICONS = ["platrly", "pinpassport", "tally", "dcw", "olearysoftware", "about", "folder", "blog", "terminal", "contact"];
 const DOCK = ["about", "platrly", "pinpassport", "tally", "dcw", "olearysoftware", "terminal", "github", "contact"];
@@ -89,8 +89,8 @@ const Desktop = () => {
 
   return (
     <div data-lenis-prevent className={`os fixed inset-0 overflow-hidden bg-[#2a1810] ${os.night ? "os-night" : ""}`}>
-      <img src="/os/wallpaper-desktop.jpg" alt="" className="os-wallpaper absolute inset-0 h-full w-full object-cover" />
-      <div className="pointer-events-none absolute inset-0 bg-white/[0.06]" aria-hidden="true" />
+      <Wallpaper day="/os/wallpaper-desktop.jpg" nightSrc="/os/wallpaper-desktop-night.jpg" night={os.night} />
+      <div className={`pointer-events-none absolute inset-0 transition-colors duration-1000 ${os.night ? "bg-transparent" : "bg-white/[0.06]"}`} aria-hidden="true" />
       <div className="absolute inset-0 bg-[radial-gradient(60%_60%_at_20%_20%,rgb(40_18_8/0.35),transparent_70%)]" aria-hidden="true" />
       {os.night && <Stars />}
 
@@ -161,7 +161,8 @@ const Desktop = () => {
           </button>
         ))}
         <span className="mx-1 h-10 w-px self-center bg-[var(--os-line)]" aria-hidden="true" />
-        <Clock onSecret={os.toggleNight} className="self-center px-2 text-[15px] font-semibold" />
+        <NightToggle night={os.night} onToggle={os.toggleNight} className="h-11 w-11 self-center" />
+        <Clock onSecret={os.toggleNight} className="self-center pr-2 text-[15px] font-semibold" />
       </nav>
 
       <AnimatePresence>{os.toast && <Toast key={os.toast} msg={os.toast} />}</AnimatePresence>

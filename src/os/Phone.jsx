@@ -6,7 +6,7 @@ import { celebrate } from "../utils/confetti";
 import { bio } from "./data";
 import { byId, RESUME_ICON } from "./registry";
 import { useOS } from "./useOS";
-import { Tumbleweed, Stars, Toast, Clock, CactusIcon } from "./extras";
+import { Tumbleweed, Stars, Toast, Clock, CactusIcon, NightToggle, Wallpaper } from "./extras";
 
 const GRID = ["platrly", "pinpassport", "tally", "dcw", "olearysoftware", "folder", "blog", "github"];
 const DOCK = ["about", "terminal", "contact"];
@@ -43,8 +43,8 @@ const Phone = () => {
 
   return (
     <div data-lenis-prevent className={`os fixed inset-0 overflow-hidden bg-[#2a1810] ${os.night ? "os-night" : ""}`}>
-      <img src="/os/wallpaper-mobile.jpg" alt="" className="os-wallpaper absolute inset-0 h-full w-full object-cover" />
-      <div className="pointer-events-none absolute inset-0 bg-white/[0.06]" aria-hidden="true" />
+      <Wallpaper day="/os/wallpaper-mobile.jpg" nightSrc="/os/wallpaper-mobile-night.jpg" night={os.night} />
+      <div className={`pointer-events-none absolute inset-0 transition-colors duration-1000 ${os.night ? "bg-transparent" : "bg-white/[0.06]"}`} aria-hidden="true" />
       <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-black/30" aria-hidden="true" />
       {os.night && <Stars />}
 
@@ -52,7 +52,10 @@ const Phone = () => {
         {/* Status bar */}
         <div className="flex items-center justify-between px-2 text-[14px] font-semibold">
           <Clock onSecret={os.toggleNight} className="min-h-8" />
-          <span className="os-mono text-[11px] tracking-widest text-white/70 uppercase">josh-os</span>
+          <span className="flex items-center gap-1">
+            <span className="os-mono text-[11px] tracking-widest text-white/70 uppercase">josh-os</span>
+            <NightToggle night={os.night} onToggle={os.toggleNight} className="h-11 w-11" />
+          </span>
         </div>
 
         {/* Greeting widget */}

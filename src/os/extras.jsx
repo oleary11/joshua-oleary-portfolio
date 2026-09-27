@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { FiMoon, FiSun } from "react-icons/fi";
 
 export const Clock = ({ onSecret, className = "" }) => {
   const [now, setNow] = useState(() => new Date());
@@ -49,6 +50,37 @@ export const Tumbleweed = () => (
     </span>
   </div>
 );
+
+export const NightToggle = ({ night, onToggle, className = "" }) => (
+  <button
+    type="button"
+    onClick={onToggle}
+    aria-pressed={night}
+    aria-label={night ? "Switch to day" : "Switch to night"}
+    title={night ? "Day mode" : "Night mode"}
+    className={`inline-flex items-center justify-center rounded-full transition-colors hover:bg-white/10 ${className}`}
+  >
+    {night ? <FiSun size={18} /> : <FiMoon size={18} />}
+  </button>
+);
+
+// Day photo underneath; the night photo fades in on top (only loaded once night is used).
+export const Wallpaper = ({ day, nightSrc, night }) => {
+  const used = useRef(night);
+  if (night) used.current = true;
+  return (
+    <>
+      <img src={day} alt="" className="absolute inset-0 h-full w-full object-cover" />
+      {used.current && (
+        <img
+          src={nightSrc}
+          alt=""
+          className={`os-night-photo absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${night ? "opacity-100" : "opacity-0"}`}
+        />
+      )}
+    </>
+  );
+};
 
 export const Stars = () => {
   const stars = useMemo(

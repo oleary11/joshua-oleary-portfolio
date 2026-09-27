@@ -77,7 +77,7 @@ export function runCommand(raw, ctx) {
     case "cat .secrets":
       return [
         "1. The Konami code does something. (up up down down left right left right b a)",
-        "2. The clock knows a trick. Try clicking it a few times.",
+        "2. Try: sudo hire-me",
         "3. There's a Trash can somewhere.",
         "4. Open every project. Something happens.",
       ];

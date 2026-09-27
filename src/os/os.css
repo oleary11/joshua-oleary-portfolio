@@ -80,9 +80,12 @@
 }
 
 /* Night mode easter egg */
-.os-night .os-wallpaper {
-  filter: brightness(0.35) saturate(0.7) hue-rotate(-15deg);
-  transition: filter 1.2s ease;
+@keyframes os-fade-in {
+  from { opacity: 0; }
+}
+
+.os-night-photo {
+  animation: os-fade-in 1s ease;
 }
 
 .os-wallpaper {
