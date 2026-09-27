@@ -122,4 +122,25 @@ export const featured = [
       "The company site, brand and logo",
     ],
   },
+  {
+    id: "idaho",
+    name: "Idaho Stump Grinders",
+    icon: "/os/projects/isg-icon.png",
+    tint: "#18241c",
+    kind: "Client website + lead generation",
+    tagline: "A local service site that turns searches into quote requests.",
+    image: "/os/projects/idaho.webp",
+    imageAlt: "The Idaho Stump Grinders website",
+    link: { label: "Visit idahostumpgrinders.com", href: "https://www.idahostumpgrinders.com" },
+    stack: ["Next.js", "TypeScript", "Tailwind", "Resend", "Google Business API"],
+    problem:
+      "A family-owned stump grinding company across Southwest and Central Idaho needed customers to find them on Google and ask for a quote without a phone tag back-and-forth.",
+    built: [
+      "Fast, mobile-first site with services, site prep, FAQ and a before/after gallery",
+      "Live Google reviews pulled from their Business Profile through the Google API",
+      "Free-quote form that emails the owner instantly through Resend",
+      "Local SEO: LocalBusiness structured data for every city served, sitemap and metadata",
+      "Tap-to-call button that follows you down the page on phones",
+    ],
+  },
 ];

@@ -182,16 +182,13 @@ export const AboutApp = () => (
 
 /* ---------- All projects folder ---------- */
 
-// Fresh images for the non-featured projects (the old constants images are outdated).
-const EXTRA_IMAGES = { "Idaho Stump Grinders": "/os/projects/idaho.webp" };
-
 const folderItems = () => {
   const extras = allProjects.filter(
     (p) => !featured.some((f) => f.name === p.name || (f.id === "dcw" && p.name === "Desert Candle Works"))
   );
   return [
     ...featured.map((f) => ({ key: f.id, name: f.name, blurb: f.tagline, image: f.image, tint: f.tint, contain: f.id === "tally" || f.id === "platrly", id: f.id })),
-    ...extras.map((p) => ({ key: p.name, name: p.name, blurb: p.description, image: EXTRA_IMAGES[p.name] ?? p.image, href: p.live_link || p.source_code_link })),
+    ...extras.map((p) => ({ key: p.name, name: p.name, blurb: p.description, image: p.image, href: p.live_link || p.source_code_link })),
   ];
 };
 

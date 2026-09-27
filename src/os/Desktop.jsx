@@ -11,8 +11,8 @@ import Window from "./Window";
 import { useOS } from "./useOS";
 import { Tumbleweed, Stars, Toast, Clock, CactusIcon, NightToggle, Wallpaper } from "./extras";
 
-const DESKTOP_ICONS = ["platrly", "pinpassport", "tally", "dcw", "olearysoftware", "about", "folder", "blog", "terminal", "contact"];
-const DOCK = ["about", "platrly", "pinpassport", "tally", "dcw", "olearysoftware", "terminal", "github", "contact"];
+const DESKTOP_ICONS = ["platrly", "pinpassport", "tally", "dcw", "olearysoftware", "idaho", "about", "folder", "blog", "terminal"];
+const DOCK = ["about", "platrly", "pinpassport", "tally", "dcw", "olearysoftware", "idaho", "terminal", "github", "contact"];
 
 function useFrames() {
   const [vp, setVp] = useState({ w: window.innerWidth, h: window.innerHeight });

@@ -8,7 +8,7 @@ import { byId, RESUME_ICON } from "./registry";
 import { useOS } from "./useOS";
 import { Tumbleweed, Stars, Toast, Clock, CactusIcon, NightToggle, Wallpaper } from "./extras";
 
-const GRID = ["platrly", "pinpassport", "tally", "dcw", "olearysoftware", "folder", "blog", "github"];
+const GRID = ["platrly", "pinpassport", "tally", "dcw", "olearysoftware", "idaho", "folder", "blog", "github"];
 const DOCK = ["about", "terminal", "contact"];
 
 const AppIcon = ({ app, onOpen, href }) => {
