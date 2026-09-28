@@ -105,7 +105,7 @@ const Desktop = () => {
 
   return (
     <div data-lenis-prevent onContextMenu={cm.onContextMenu} className={`os fixed inset-0 overflow-hidden bg-[#2a1810] ${os.night ? "os-night" : ""}`}>
-      <Wallpaper day="/os/wallpaper-desktop.webp" nightSrc="/os/wallpaper-desktop-night.webp" night={os.night} />
+      <Wallpaper day="/os/wallpaper-desktop-{w}.webp" nightSrc="/os/wallpaper-desktop-night-{w}.webp" widths={[1920, 2560, 3840]} night={os.night} />
       <div className={`pointer-events-none absolute inset-0 transition-colors duration-1000 ${os.night ? "bg-transparent" : "bg-white/[0.03]"}`} aria-hidden="true" />
       <div className="absolute inset-0 bg-[radial-gradient(60%_60%_at_20%_20%,rgb(40_18_8/0.35),transparent_70%)]" aria-hidden="true" />
       {os.night && <Stars />}
