@@ -386,7 +386,7 @@ export const BlogApp = () => {
 
 /* ---------- Contact ---------- */
 
-export const ContactApp = () => {
+export const ContactApp = ({ openApp }) => {
   const [form, setForm] = useState({ name: "", email: "", message: "", company: "" });
   const [status, setStatus] = useState("idle");
   const [err, setErr] = useState("");
@@ -451,9 +451,43 @@ export const ContactApp = () => {
         {status === "success" && <span className="text-[#9be6a8]">Thanks! I&apos;ll get back to you soon.</span>}
         {status === "error" && <span className="text-[#ffb4a2]">{err}</span>}
       </p>
+      <p className="text-[12px] text-[var(--os-faint)]">
+        I only use your details to reply to you.{" "}
+        {openApp ? (
+          <button type="button" onClick={() => openApp("privacy")} className="underline underline-offset-2 hover:text-white">
+            privacy.txt
+          </button>
+        ) : null}
+      </p>
     </form>
   );
 };
+
+/* ---------- Privacy note ---------- */
+
+const PRIVACY = [
+  ["What the contact form collects", "Your name, email and message. Resend delivers them to my inbox, and I use them only to reply to you. No mailing lists, and I never sell or share them."],
+  ["Tracking", "None. No analytics, ad pixels or tracking cookies."],
+  ["Saved in your browser", "Your day/night choice, which blog posts you've reacted to, and a timestamp so one visit counts as one blog view. It stays on your device and doesn't identify you."],
+  ["Other services", "The site is hosted on Vercel, which logs basic request data to keep it running. Fonts load from Google Fonts, and blog posts from Supabase, which see your IP address when they load."],
+  ["Deleting your message", "Email " + EMAIL + " and I'll delete anything you've sent me."],
+];
+
+export const PrivacyApp = () => (
+  <div className="os-mono space-y-4 p-5 text-[13px] leading-relaxed text-[var(--os-muted)]">
+    <p className="text-[var(--os-faint)]"># privacy.txt · updated September 27, 2026</p>
+    {PRIVACY.map(([h, t]) => (
+      <p key={h}>
+        <span className="text-[var(--os-text)]">{h}</span>
+        <br />
+        {t}
+      </p>
+    ))}
+    <p className="text-[var(--os-faint)]">
+      olearyhouse.com is Joshua O&apos;Leary&apos;s personal site, Phoenix, Arizona.
+    </p>
+  </div>
+);
 
 /* ---------- Trash (easter egg) ---------- */
 

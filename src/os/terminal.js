@@ -3,7 +3,7 @@ import { featured, EMAIL, GITHUB_USERNAME } from "./data";
 import { celebrate } from "../utils/confetti";
 import { downloadResume } from "../utils/downloadResume";
 
-const HELP = ["whoami", "about", "projects", "open <project>", "experience", "skills", "resume", "contact", "github", "clear", "exit"];
+const HELP = ["whoami", "about", "projects", "open <project>", "experience", "skills", "resume", "contact", "github", "privacy", "clear", "exit"];
 
 const MUG = [
   "   ( (",
@@ -63,6 +63,10 @@ export function runCommand(raw, ctx) {
       return [`Email: ${EMAIL}`, "Opening Contact..."];
     case "github":
       return [`github.com/${GITHUB_USERNAME}`];
+    case "privacy":
+    case "cat privacy.txt":
+      ctx.openApp("privacy");
+      return ["Opening privacy.txt... (short version: no tracking, and your message is only used to reply)"];
     case "clear":
       ctx.clear();
       return null;
@@ -73,7 +77,7 @@ export function runCommand(raw, ctx) {
     // ---- hidden ----
     case "ls -a":
     case "ls -la":
-      return [".  ..  .secrets  projects/  resume.pdf  coffee.sh"];
+      return [".  ..  .secrets  projects/  resume.pdf  privacy.txt  coffee.sh"];
     case "cat .secrets":
       return [
         "1. The Konami code does something. (up up down down left right left right b a)",

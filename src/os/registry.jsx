@@ -1,6 +1,6 @@
-import { FiUser, FiTerminal, FiGithub, FiMail, FiFileText, FiFolder, FiTrash2, FiBookOpen } from "react-icons/fi";
+import { FiUser, FiTerminal, FiGithub, FiMail, FiFileText, FiFolder, FiTrash2, FiBookOpen, FiLock } from "react-icons/fi";
 import { featured } from "./data";
-import { ProjectApp, AboutApp, TerminalApp, GitHubApp, BlogApp, ContactApp, ProjectsFolderApp, TrashApp } from "./apps";
+import { ProjectApp, AboutApp, TerminalApp, GitHubApp, BlogApp, ContactApp, ProjectsFolderApp, TrashApp, PrivacyApp } from "./apps";
 
 const Tile = ({ bg, children }) => (
   <span className="flex h-full w-full items-center justify-center rounded-[22%] shadow-[0_10px_20px_-8px_rgb(0_0_0/0.6)] ring-1 ring-white/15" style={{ background: bg }}>
@@ -70,7 +70,15 @@ export const APPS = [
     label: "Contact",
     icon: <Tile bg="linear-gradient(145deg,#f08a4b,#d9622b)"><FiMail className={glyph} /></Tile>,
     size: { w: 520, h: 560 },
-    render: () => <ContactApp />,
+    render: (ctx) => <ContactApp openApp={ctx.openApp} />,
+  },
+  {
+    id: "privacy",
+    title: "privacy.txt",
+    label: "privacy.txt",
+    icon: <Tile bg="linear-gradient(145deg,#fff4e8,#f0d6bd)"><FiLock className="h-[46%] w-[46%] text-[#b2451c]" /></Tile>,
+    size: { w: 480, h: 470 },
+    render: () => <PrivacyApp />,
   },
   {
     id: "trash",

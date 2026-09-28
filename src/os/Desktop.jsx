@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import myimg from "../assets/myimg.png";
 import { resume } from "../assets";
 import { celebrate } from "../utils/confetti";
@@ -191,9 +191,12 @@ const Desktop = () => {
       )}
       <AnimatePresence>{os.toast && <Toast key={os.toast} msg={os.toast} />}</AnimatePresence>
       {os.tumble > 0 && <Tumbleweed key={os.tumble} />}
-      <motion.p aria-hidden="true" className="os-mono pointer-events-none absolute bottom-6 left-7 text-[11px] tracking-[0.25em] text-white/60 uppercase">
-        Phoenix, Arizona
-      </motion.p>
+      <div className="os-mono absolute bottom-5 left-7 flex items-center gap-4 text-[11px] tracking-[0.25em] text-white/60 uppercase">
+        <span aria-hidden="true">Phoenix, Arizona</span>
+        <button type="button" onClick={() => open("privacy")} className="min-h-8 tracking-[0.25em] uppercase underline-offset-4 hover:text-white hover:underline">
+          Privacy
+        </button>
+      </div>
     </div>
   );
 };
