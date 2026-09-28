@@ -28,21 +28,27 @@ const Window = ({ app, state, active, constraintsRef, onFocus, onClose, onMinimi
         onPointerDown={(e) => controls.start(e)}
         className="flex h-11 shrink-0 cursor-grab items-center gap-3 border-b border-[var(--os-line)] px-4 active:cursor-grabbing"
       >
+        {/* Buttons carry a larger invisible hit area around each 14px dot; negative
+            margins keep the dots' visual spacing unchanged. */}
         <div className="flex items-center gap-2">
           <button
             type="button"
             aria-label={`Close ${app.title}`}
             onPointerDown={(e) => e.stopPropagation()}
             onClick={onClose}
-            className="h-3.5 w-3.5 rounded-full bg-[#ff5f57] ring-1 ring-black/20"
-          />
+            className="-mx-1 -my-[7px] grid h-7 w-[22px] place-items-center rounded-full"
+          >
+            <span className="h-3.5 w-3.5 rounded-full bg-[#ff5f57] ring-1 ring-black/20" />
+          </button>
           <button
             type="button"
             aria-label={`Minimize ${app.title}`}
             onPointerDown={(e) => e.stopPropagation()}
             onClick={onMinimize}
-            className="h-3.5 w-3.5 rounded-full bg-[#febc2e] ring-1 ring-black/20"
-          />
+            className="-mx-1 -my-[7px] grid h-7 w-[22px] place-items-center rounded-full"
+          >
+            <span className="h-3.5 w-3.5 rounded-full bg-[#febc2e] ring-1 ring-black/20" />
+          </button>
           <span className="h-3.5 w-3.5 rounded-full bg-[#28c840] ring-1 ring-black/20" aria-hidden="true" />
         </div>
         <p className={`flex items-center gap-2 text-[14px] font-semibold select-none transition-opacity ${active ? "" : "opacity-55"}`}>{app.title}</p>
